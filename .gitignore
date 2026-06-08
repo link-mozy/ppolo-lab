@@ -1,0 +1,41 @@
+# OS / editor
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Environment files
+.env
+.env.local
+.env.*.local
+!.env.example
+
+# Logs / runtime
+*.log
+logs/
+.tmp/
+tmp/
+
+# Python
+__pycache__/
+*.py[cod]
+*.pyd
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.venv/
+venv/
+
+# Node.js
+node_modules/
+dist/
+build/
+coverage/
+.npm/
+.pnpm-store/
+
+# General
+*.sqlite3
+*.db
