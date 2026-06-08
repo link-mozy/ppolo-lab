@@ -203,46 +203,45 @@ effective_time = active_time + pause_penalty_seconds
 - 진행 중, 완료, 미시작 상태를 한 화면에서 같이 표현할 수 있어야 한다.
 
 ### 8.2 실시간 랭킹의 기본 원리
-실시간 랭킹은 **상태 우선순위 + 진행률 + 유효 시간 + 페이스** 의 조합으로 계산한다.
+실시간 랭킹은 **예상 도달 시각(ETA)** 을 중심으로 계산하되, 상태와 진행도, 페이스, 유효 시간으로 보정한다.
 
 ### 8.3 실시간 랭킹 키
+실시간 랭킹 화면에는 다음 상태만 노출한다.
+- `running`
+- `paused`
+- `finished`
+
+`ready`, `joined_waiting` 는 랭킹 화면에서 숨기고, 별도 대기실 상태로만 표시한다. `expired`, `dnf`, `disqualified` 는 실시간 랭킹이 아니라 종료 결과 영역에서 보여준다.
+
 정렬 우선순위는 다음과 같다.
 
-#### 1순위: 상태 그룹
-권장 순서:
-1. `finished`
-2. `running`
-3. `paused`
-4. `ready`
-5. `joined_waiting`
-6. `sync_pending`
-7. `expired`
-8. `dnf`
-9. `disqualified`
-10. `not_joined`
-
-> 운영 정책에 따라 `expired`, `dnf`, `disqualified` 의 위치는 별도 영역으로 분리할 수 있다. 다만 한 화면에서는 구분 표기가 필요하다.
+#### 1순위: 목표 도달 예상 시각
+```text
+projected_finish_at = current_time + remaining_distance_m / current_speed_mps
+```
+- 값이 더 이른 사람이 우선한다.
+- `finished` 상태는 실제 `finish_at` 를 `projected_finish_at` 으로 사용한다.
+- 현재 속도가 더 빠를수록 상위가 된다.
 
 #### 2순위: 진행률
 ```text
 progress_ratio = current_distance_m / target_distance_m
 ```
 - 값이 큰 사람이 우선한다.
-- 목표 거리 도달 여부를 즉시 반영한다.
+- ETA가 계산 불가한 경우 보조 기준으로 사용한다.
 
-#### 3순위: 현재 유효 거리
-```text
-current_distance_m
-```
-- 진행률이 동일한 경우, 절대 거리도 비교한다.
-- 목표 거리 자체가 같기 때문에 진행률과 거의 같은 효과를 낸다.
-
-#### 4순위: 평균 페이스
+#### 3순위: 평균 페이스
 ```text
 pace_seconds_per_km = effective_time / (current_distance_m / 1000)
 ```
 - 값이 작은 사람이 우선한다.
 - 같은 거리라면 더 빠른 사람이 상위다.
+
+#### 4순위: 현재 유효 거리
+```text
+current_distance_m
+```
+- 진행률이 동일한 경우, 절대 거리도 비교한다.
 
 #### 5순위: 유효 시간
 ```text
