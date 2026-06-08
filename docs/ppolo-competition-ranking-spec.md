@@ -162,7 +162,8 @@ sync_pending -> running / finished / dnf / disqualified
 
 ### 6.3 일시정지 규칙
 - `paused` 구간은 `active_time` 에 포함하지 않는다.
-- 누적 `pause_seconds` 가 허용치보다 크면 패널티가 발생한다.
+- 누적 `pause_seconds` 는 경쟁 전체 기준의 누적 총합으로 계산한다.
+- 누적 `pause_seconds` 가 방장 설정 허용치보다 크면 초과분만 패널티로 반영한다.
 - 일시정지가 길어질수록 실시간 랭킹에서 불리해진다.
 
 ---
@@ -170,10 +171,10 @@ sync_pending -> running / finished / dnf / disqualified
 ## 7. 패널티 규칙
 
 ### 7.1 기본 개념
-일시정지 시간은 원칙적으로 운동시간에서 제외한다. 하지만 허용된 최대 일시정지 시간을 초과하면 패널티를 적용한다.
+일시정지 시간은 원칙적으로 운동시간에서 제외한다. 하지만 방장이 설정한 누적 무료 일시정지 시간을 초과하면, 초과분만 패널티를 적용한다.
 
 ### 7.2 패널티 입력값
-- `allowed_pause_seconds` : 경쟁방 정책으로 정의되는 최대 허용 일시정지 시간
+- `allowed_pause_seconds` : 경쟁방 생성 시 방장이 설정하는 누적 무료 일시정지 시간 (0~300초)
 - `pause_seconds` : 실제 누적 일시정지 시간
 
 ### 7.3 패널티 계산
@@ -188,7 +189,8 @@ effective_time = active_time + pause_penalty_seconds
 
 ### 7.5 패널티 처리 결과
 - `pause_seconds <= allowed_pause_seconds` : 패널티 없음
-- `pause_seconds > allowed_pause_seconds` : 패널티 적용
+- `pause_seconds > allowed_pause_seconds` : 초과분만 1:1로 패널티 적용
+- 추가 가중 패널티(예: 2배)는 적용하지 않는다
 - 패널티는 실시간 랭킹과 최종 랭킹 모두에 반영 가능해야 한다
 
 ---
