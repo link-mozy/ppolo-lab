@@ -166,6 +166,15 @@ sync_pending -> running / finished / dnf / disqualified
 - 누적 `pause_seconds` 가 방장 설정 허용치보다 크면 초과분만 패널티로 반영한다.
 - 일시정지가 길어질수록 실시간 랭킹에서 불리해진다.
 
+### 6.4 일시정지 유효성 검증
+- 이 조항은 **MVP 초안** 이며, 실제 판정 수치와 세부 조건은 MVP 운영 중 데이터와 사용성을 보면서 채운다.
+- 현재는 `paused` 상태에서 이동량이 기준치 이상 발생하면 해당 구간을 **유효한 일시정지로 인정하지 않는 방향** 만 정의한다.
+- 이동량 기준은 MVP에서 GPS 거리 변화, 센서 이동량, 가속도 변화 등을 참고해 구체화할 수 있다.
+- 유효하지 않은 일시정지는 자동으로 `paused -> running` 으로 해제한다.
+- 이때 사용자에게는 **"일시정지가 해제되었습니다"**, **"이동이 감지되어 일시정지가 무효 처리되었습니다"** 와 같은 경고를 표시한다.
+- 무효 처리된 구간은 `pause_seconds` 에 포함하지 않는다.
+- 반복적인 무효 일시정지는 검수/제재 후보로 남길 수 있다.
+
 ---
 
 ## 7. 패널티 규칙
@@ -251,13 +260,20 @@ effective_time = active_time + pause_penalty_seconds
 ```
 - 값이 작은 사람이 우선한다.
 
-#### 6순위: 시작 시각
+#### 6순위: 총 일시정지 시간
+```text
+pause_seconds
+```
+- 값이 작은 사람이 우선한다.
+- 무료 일시정지 허용 범위 안이라도, **일시정지를 전혀 하지 않은 참가자** 가 더 높은 순위를 갖는다.
+
+#### 7순위: 시작 시각
 ```text
 start_at ASC
 ```
 - 더 먼저 시작한 사람이 우선한다.
 
-#### 7순위: 마지막 유효 이벤트 시각
+#### 8순위: 마지막 유효 이벤트 시각
 ```text
 last_event_at ASC
 ```
@@ -290,15 +306,17 @@ finalized_at = deadline_at
 2. 목표 거리 도달 시각
 3. 진행률
 4. `effective_time`
-5. 평균 페이스
-6. `distance_m`
-7. `start_at`
-8. `last_event_at`
+5. `pause_seconds`
+6. 평균 페이스
+7. `distance_m`
+8. `start_at`
+9. `last_event_at`
 
 ### 9.5 최종 랭킹 세부 규칙
 - 같은 거리로 목표를 달성했다면 더 빠르게 도달한 사람이 우선한다.
 - 목표를 달성하지 못한 참가자는 진행률이 높은 순으로 정렬한다.
 - 동일 진행률이라면 `effective_time` 이 적은 사람이 우선한다.
+- `effective_time` 까지 같다면 `pause_seconds` 가 적은 사람이 우선한다.
 - 동점이면 평균 페이스가 좋은 사람이 우선한다.
 
 ---
@@ -311,6 +329,7 @@ finalized_at = deadline_at
 - 진행률
 - 거리
 - `effective_time`
+- `pause_seconds`
 - 평균 페이스
 - 시작 시각
 - 마지막 유효 이벤트 시각
@@ -376,6 +395,7 @@ rank_key = (
   distance_m DESC,
   pace_seconds_per_km ASC,
   effective_time ASC,
+  pause_seconds ASC,
   start_at ASC,
   last_event_at ASC
 )
@@ -388,6 +408,7 @@ final_rank_key = (
   goal_reached_at ASC,
   progress_ratio DESC,
   effective_time ASC,
+  pause_seconds ASC,
   pace_seconds_per_km ASC,
   distance_m DESC,
   start_at ASC,
