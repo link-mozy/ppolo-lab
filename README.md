@@ -16,6 +16,7 @@
 
 ## 주요 문서
 - `docs/ppolo-system-design.md` — PPOLO 서비스 개요, 아키텍처, 기능, 데이터, 로그 정책
+- `docs/ppolo-competition-ranking-spec.md` — 경쟁 실시간/최종 랭킹 알고리즘 명세
 
 ## 다음 단계
 스택이 정해지면 아래를 바로 추가합니다.
