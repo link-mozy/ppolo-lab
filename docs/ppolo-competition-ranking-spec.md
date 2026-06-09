@@ -222,6 +222,15 @@ effective_time = active_time + pause_penalty_seconds
 
 `joined_waiting` 는 랭킹 화면에서 숨기고, 별도 대기실 상태로만 표시한다. `dns`, `dnf`, `disqualified` 는 실시간 랭킹이 아니라 종료 결과 영역에서 보여준다.
 
+### 8.4 ETA 설정 항목
+- 실시간 랭킹의 `ETA` 는 누적 평균 ETA와 최근 구간 ETA를 조합하여 계산한다.
+- `avg_weight` 와 `recent_weight` 의 합은 항상 `100` 이다.
+- MVP 초기값은 `avg_weight = 100`, `recent_weight = 0` 으로 시작한다.
+- 운영 중에는 `80:20`, `60:40` 과 같이 최근 구간 반영 비율을 조정할 수 있다.
+- 최근 구간 계산에 사용할 시간 범위와 최소 거리 기준은 별도 설정값으로 관리한다.
+- `측정 대기` 상태에서는 `ETA` 를 표시하지 않거나 `-` 로 표시한다.
+- `DNS`, `DNF`, `disqualified` 상태는 `ETA` 대신 결과 상태로 표시한다.
+
 정렬 우선순위는 다음과 같다.
 
 #### 1순위: 목표 도달 예상 시각
