@@ -50,7 +50,7 @@ PPOLO 경쟁 랭킹의 목적은 다음과 같다.
 
 ### 3.4 active time
 실제로 운동이 진행된 시간.
-- `running` 구간만 합산한다.
+- `measuring` 구간만 합산한다.
 - `paused` 구간은 제외한다.
 
 ### 3.5 pause time
@@ -85,7 +85,7 @@ progress_ratio = current_distance_m / target_distance_m
 - `joined_waiting` : 입장했지만 기록 시작 전 / 측정 대기
 - `measuring` : 기록 진행 중 / 측정 중
 - `paused` : 일시정지 중
-- `finished` : 목표 달성 후 종료
+- `measured` : 목표 달성 후 종료
 - `dns` : 미참가, 마감 시각까지 측정을 시작하지 않음
 - `dnf` : 포기/중도 종료
 - `disqualified` : 부정행위 또는 무효
@@ -94,21 +94,21 @@ progress_ratio = current_distance_m / target_distance_m
 ### 4.2 상태 전이
 
 ```text
-not_joined -> joined_waiting -> measuring -> finished
+not_joined -> joined_waiting -> measuring -> measured
 not_joined -> dns
 joined_waiting -> dns
 measuring -> paused
 paused -> measuring
-measuring -> finished
+measuring -> measured
 measuring -> dnf
 paused -> dnf
 measuring -> disqualified
 paused -> disqualified
-sync_pending -> measuring / finished / dnf / disqualified
+sync_pending -> measuring / measured / dnf / disqualified
 ```
 
 ### 4.3 상태 전이 규칙
-- `finished` 는 목표 거리 도달 시 확정된다.
+- `measured` 는 목표 거리 도달 시 확정된다.
 - `dns` 는 마감 시간까지 유효 기록이 없을 때 적용된다.
 - `dnf` 는 사용자가 명시적으로 포기하거나, 정책상 중도 종료로 판정될 때 적용된다.
 - `disqualified` 는 비정상 기록, 부정행위, 중복 참여 등으로 적용된다.
@@ -168,7 +168,7 @@ sync_pending -> measuring / finished / dnf / disqualified
 - 이 조항은 **MVP 초안** 이며, 실제 판정 수치와 세부 조건은 MVP 운영 중 데이터와 사용성을 보면서 채운다.
 - 현재는 `paused` 상태에서 이동량이 기준치 이상 발생하면 해당 구간을 **유효한 일시정지로 인정하지 않는 방향** 만 정의한다.
 - 이동량 기준은 MVP에서 GPS 거리 변화, 센서 이동량, 가속도 변화 등을 참고해 구체화할 수 있다.
-- 유효하지 않은 일시정지는 자동으로 `paused -> running` 으로 해제한다.
+- 유효하지 않은 일시정지는 자동으로 `paused -> measuring` 으로 해제한다.
 - 이때 사용자에게는 **"일시정지가 해제되었습니다"**, **"이동이 감지되어 일시정지가 무효 처리되었습니다"** 와 같은 경고를 표시한다.
 - 무효 처리된 구간은 `pause_seconds` 에 포함하지 않는다.
 - 반복적인 무효 일시정지는 검수/제재 후보로 남길 수 있다.
@@ -222,10 +222,9 @@ effective_time = active_time + pause_penalty_seconds
 - `DNS`, `DNF`, `disqualified` 상태는 `ETA` 대신 종료 결과로 표시한다.
 
 ### 8.3 실시간 랭킹 노출 상태
-실시간 랭킹 화면에는 다음 상태만 노출한다.
-- `running`
+- `measuring`
 - `paused`
-- `finished`
+- `measured`
 
 `joined_waiting` 는 랭킹 화면에서 숨기고, 별도 대기실 상태로만 표시한다. `dns`, `dnf`, `disqualified` 는 실시간 랭킹이 아니라 종료 결과 영역에서 보여준다.
 
@@ -237,7 +236,7 @@ effective_time = active_time + pause_penalty_seconds
 projected_finish_at = current_time + remaining_distance_m / current_speed_mps
 ```
 - 값이 더 이른 사람이 우선한다.
-- `finished` 상태는 실제 `finish_at` 를 `projected_finish_at` 으로 사용한다.
+- `measured` 상태는 실제 `finish_at` 를 `projected_finish_at` 으로 사용한다.
 - 현재 속도가 더 빠를수록 상위가 된다.
 
 #### 2순위: 진행률
@@ -419,12 +418,12 @@ final_rank_key = (
 ## 14. 시나리오별 해석
 
 ### 시나리오 1: 모든 사람이 실시간으로 경쟁 중
-- 모두 `running` 또는 `paused`
+- 모두 `measuring` 또는 `paused`
 - 실시간 순위는 진행률과 페이스 중심
 - 최종 결과는 마감 시점 스냅샷으로 확정
 
 ### 시나리오 2: 몇몇만 경쟁 중이고 아직 시작하지 않은 사람이 있음
-- `running` / `paused` / `ready` 혼합
+- `measuring` / `paused` / `joined_waiting` 혼합
 - 미시작자는 하위 영역에서 표시
 
 ### 시나리오 3: 몇몇은 이미 기록을 남겼고 후발자가 경쟁 중
@@ -432,9 +431,9 @@ final_rank_key = (
 - 후발자는 자신의 현재 진행률로 실시간 순위에 참여 가능
 
 ### 시나리오 4: 일부는 기록 완료, 일부는 경쟁 중, 일부는 미시작
-- `finished` 는 고정
-- `running` 은 실시간 반영
-- `ready` / `joined_waiting` 은 대기 상태
+- `measured` 는 고정
+- `measuring` 은 실시간 반영
+- `joined_waiting` 은 대기 상태
 
 ### 시나리오 5: 일부는 끝냈고 일부는 아직 시작하지 않음
 - 완료자는 상위 고정

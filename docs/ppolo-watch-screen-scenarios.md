@@ -111,7 +111,7 @@
 ### 5.2 경쟁 진행 중
 #### 표시 정보
 - 현재 상태: `경쟁 중`
-- 내 상태: `running` / `paused` / `finished`
+- 내 상태: `measuring` / `paused` / `measured`
 - 현재 거리
 - 현재 페이스
 - 1등과의 차이
