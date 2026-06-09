@@ -82,9 +82,8 @@ progress_ratio = current_distance_m / target_distance_m
 
 ### 4.1 상태 목록
 - `not_joined` : 방에 없음
-- `joined_waiting` : 입장했지만 기록 시작 전
-- `ready` : 시작 준비 완료
-- `running` : 기록 진행 중
+- `joined_waiting` : 입장했지만 기록 시작 전 / 측정 대기
+- `measuring` : 기록 진행 중 / 측정 중
 - `paused` : 일시정지 중
 - `finished` : 목표 달성 후 종료
 - `dns` : 미참가, 마감 시각까지 측정을 시작하지 않음
@@ -95,23 +94,22 @@ progress_ratio = current_distance_m / target_distance_m
 ### 4.2 상태 전이
 
 ```text
-not_joined -> joined_waiting -> ready -> running -> paused -> running -> finished
-not_joined -> expired
-joined_waiting -> expired
-ready -> expired
-running -> finished
-running -> paused
-paused -> running
-running -> dnf
+not_joined -> joined_waiting -> measuring -> finished
+not_joined -> dns
+joined_waiting -> dns
+measuring -> paused
+paused -> measuring
+measuring -> finished
+measuring -> dnf
 paused -> dnf
-running -> disqualified
+measuring -> disqualified
 paused -> disqualified
-sync_pending -> running / finished / dnf / disqualified
+sync_pending -> measuring / finished / dnf / disqualified
 ```
 
 ### 4.3 상태 전이 규칙
 - `finished` 는 목표 거리 도달 시 확정된다.
-- `expired` 는 마감 시간까지 유효 기록이 없을 때 적용된다.
+- `dns` 는 마감 시간까지 유효 기록이 없을 때 적용된다.
 - `dnf` 는 사용자가 명시적으로 포기하거나, 정책상 중도 종료로 판정될 때 적용된다.
 - `disqualified` 는 비정상 기록, 부정행위, 중복 참여 등으로 적용된다.
 - `sync_pending` 은 오프라인 상태에서 수집된 기록이 서버에 아직 확정 반영되지 않은 상태다.
@@ -222,7 +220,7 @@ effective_time = active_time + pause_penalty_seconds
 - `paused`
 - `finished`
 
-`ready`, `joined_waiting` 는 랭킹 화면에서 숨기고, 별도 대기실 상태로만 표시한다. `expired`, `dnf`, `disqualified` 는 실시간 랭킹이 아니라 종료 결과 영역에서 보여준다.
+`joined_waiting` 는 랭킹 화면에서 숨기고, 별도 대기실 상태로만 표시한다. `dns`, `dnf`, `disqualified` 는 실시간 랭킹이 아니라 종료 결과 영역에서 보여준다.
 
 정렬 우선순위는 다음과 같다.
 
