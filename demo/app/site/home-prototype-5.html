@@ -1,0 +1,173 @@
+<!doctype html>
+<html lang="ko">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>PPOLO 홈 프로토타입 5 · 운영판형</title>
+    <meta name="description" content="PPOLO 홈 화면 정보 밀도 시안 5 - 정보 밀도 높은 운영판형 프로토타입" />
+    <style>
+      :root {
+        --bg: #050913;
+        --panel: rgba(10, 17, 31, 0.9);
+        --panel-strong: #0d1527;
+        --text: #edf3ff;
+        --muted: #9babc8;
+        --accent: #7c9cff;
+        --accent-2: #39d1bf;
+        --danger: #ff7d7d;
+        --line: rgba(148, 163, 184, 0.16);
+        --shadow: 0 28px 72px rgba(0, 0, 0, 0.42);
+      }
+      * { box-sizing: border-box; }
+      html, body { margin: 0; min-height: 100%; }
+      body {
+        font-family: Inter, Pretendard, "Noto Sans KR", system-ui, -apple-system, sans-serif;
+        color: var(--text);
+        background:
+          radial-gradient(circle at top left, rgba(124, 156, 255, 0.15), transparent 22%),
+          radial-gradient(circle at 90% 0%, rgba(57, 209, 191, 0.12), transparent 20%),
+          linear-gradient(180deg, #04070d 0%, var(--bg) 100%);
+      }
+      .page { max-width: 1440px; margin: 0 auto; padding: 28px 18px 42px; }
+      .banner, .panel, .tile, .rank-row, .notice {
+        background: var(--panel);
+        border: 1px solid var(--line);
+        box-shadow: var(--shadow);
+        backdrop-filter: blur(12px);
+      }
+      .banner {
+        border-radius: 28px; padding: 24px 26px; display:flex; justify-content: space-between; gap: 16px; align-items:flex-start;
+      }
+      .eyebrow { margin: 0 0 8px; font-size: 12px; letter-spacing: .14em; text-transform: uppercase; color: var(--accent-2); }
+      h1 { margin: 0 0 8px; font-size: clamp(2rem, 4vw, 3rem); }
+      .lead { margin: 0; color: var(--muted); line-height: 1.7; max-width: 60ch; }
+      .chips { display:flex; flex-wrap: wrap; gap: 10px; align-content:flex-start; }
+      .chip { padding: 10px 14px; border-radius: 999px; border: 1px solid var(--line); background: rgba(255,255,255,0.04); color: var(--text); font-size: 13px; font-weight: 800; }
+      .chip.live { border-color: rgba(57, 209, 191, .28); color: var(--accent-2); }
+      .layout { margin-top: 18px; display:grid; grid-template-columns: 300px minmax(0, 1.25fr) 320px; gap: 16px; }
+      .panel { border-radius: 26px; padding: 20px; }
+      .panel h2, .panel h3 { margin: 0 0 12px; }
+      .panel p, .panel li, .notice p { margin:0; color: var(--muted); line-height: 1.7; }
+      .tile-grid { display:grid; grid-template-columns: repeat(2, minmax(0,1fr)); gap: 12px; }
+      .tile { border-radius: 20px; padding: 16px; }
+      .tile span { display:block; color: var(--muted); font-size: 12px; margin-bottom: 6px; }
+      .tile strong { font-size: 1.1rem; }
+      .rank-list { display:grid; gap: 10px; }
+      .rank-row {
+        border-radius: 18px; padding: 12px 14px; display:flex; justify-content: space-between; gap: 10px; align-items:center;
+      }
+      .rank-row .name { font-weight: 800; }
+      .rank-row small { display:block; margin-top: 4px; color: var(--muted); }
+      .rank-row .meta { text-align:right; white-space: nowrap; }
+      .meta-pill { display:inline-flex; padding: 8px 10px; border-radius: 999px; background: rgba(124,156,255,.12); color: #dbe4ff; font-weight: 800; font-size: 12px; }
+      .meta-pill.good { background: rgba(57,209,191,.12); color: #bef8f0; }
+      .notice-list { display:grid; gap: 10px; }
+      .notice {
+        border-radius: 18px; padding: 14px 16px;
+        background: rgba(57,209,191,.07);
+      }
+      .notice.warn { background: rgba(255,125,125,.06); }
+      .collapse {
+        margin-top: 12px; border-radius: 18px; overflow:hidden; border: 1px solid var(--line); background: rgba(255,255,255,0.03);
+      }
+      .collapse button {
+        width: 100%; display:flex; justify-content: space-between; gap: 12px; align-items:center;
+        padding: 14px 16px; border: 0; background: transparent; color: var(--text); font: inherit; cursor:pointer; font-weight: 800;
+      }
+      .collapse .body { display:none; padding: 0 16px 16px; }
+      .collapse.open .body { display:block; }
+      .footer { margin-top: 16px; color: var(--muted); font-size: 13px; }
+      .footer a { color: var(--accent-2); text-decoration:none; font-weight: 800; }
+      .headline { display:grid; gap: 14px; }
+      .status-line { display:flex; flex-wrap: wrap; gap: 10px; }
+      .status-line .chip { font-size: 12px; }
+      @media (max-width: 1100px) {
+        .banner { grid-template-columns: 1fr; display:grid; }
+        .layout { grid-template-columns: 1fr; }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="page">
+      <header class="banner">
+        <div class="headline">
+          <div>
+            <p class="eyebrow">PPOLO / HOME PROTOTYPE 5</p>
+            <h1>정보 밀도 높은 운영판 홈</h1>
+            <p class="lead">가장 많은 정보를 한 화면에 넣는 시안입니다. 경쟁방 현황, 실시간 랭킹, 공지, ETA, 순위 외 결과를 모두 보면서도 구조가 무너지지 않는지 확인하는 용도입니다.</p>
+          </div>
+          <div class="status-line">
+            <span class="chip live">현재 경쟁 활성화</span>
+            <span class="chip">참가자 24명</span>
+            <span class="chip">마감 18분 전</span>
+            <span class="chip">실시간 랭킹 업데이트 중</span>
+          </div>
+        </div>
+        <div class="chips">
+          <span class="chip">ETA 19:12</span>
+          <span class="chip">1위와 2분 차이</span>
+          <span class="chip">순위 외 결과 4명</span>
+        </div>
+      </header>
+
+      <main class="layout">
+        <section class="panel">
+          <p class="eyebrow">내 상태</p>
+          <div class="tile-grid">
+            <article class="tile"><span>현재 순위</span><strong>3위</strong></article>
+            <article class="tile"><span>현재 상태</span><strong>측정 중</strong></article>
+            <article class="tile"><span>1등과 차이</span><strong>1분 58초</strong></article>
+            <article class="tile"><span>일시정지 누적</span><strong>12초</strong></article>
+          </div>
+          <div class="notice-list" style="margin-top:12px;">
+            <div class="notice">실시간 랭킹은 완주 중인 참가자만 표시합니다.</div>
+            <div class="notice warn">마감 이후 업로드는 차단되며, DNS·DNF·실격은 별도 결과로 분리됩니다.</div>
+          </div>
+        </section>
+
+        <section class="panel">
+          <p class="eyebrow">실시간 랭킹</p>
+          <div class="rank-list">
+            <div class="rank-row"><div><div class="name">1. 민수</div><small>ETA 18:41 · 완주 중</small></div><div class="meta"><span class="meta-pill good">-</span></div></div>
+            <div class="rank-row"><div><div class="name">2. 유진</div><small>ETA 18:57 · 완주 중</small></div><div class="meta"><span class="meta-pill">+24초</span></div></div>
+            <div class="rank-row"><div><div class="name">3. 나</div><small>ETA 19:12 · 측정 중</small></div><div class="meta"><span class="meta-pill live">내 위치</span></div></div>
+            <div class="rank-row"><div><div class="name">4. 혜진</div><small>ETA 19:26 · 완주 중</small></div><div class="meta"><span class="meta-pill">+44초</span></div></div>
+            <div class="rank-row"><div><div class="name">5. 준호</div><small>ETA 19:39 · 완주 중</small></div><div class="meta"><span class="meta-pill">+58초</span></div></div>
+          </div>
+          <div class="collapse" id="oob-panel">
+            <button id="toggle-oob" type="button"><span>순위 외 결과 4명</span><span>▾</span></button>
+            <div class="body">
+              <p>DNS: 2명 · DNF: 1명 · disqualified: 1명</p>
+              <p style="margin-top:8px;">이 영역은 주 순위와 완전히 분리되어 보여야 합니다.</p>
+            </div>
+          </div>
+        </section>
+
+        <aside class="panel">
+          <p class="eyebrow">공지 / 룰 요약</p>
+          <div class="notice-list">
+            <div class="notice">방 입장 시 비밀번호는 저장된 문자열과 단순 비교합니다.</div>
+            <div class="notice">측정 대기 상태는 실시간 랭킹에서 제외됩니다.</div>
+            <div class="notice warn">일시정지 허용 시간이 0초면 버튼을 노출하지 않습니다.</div>
+          </div>
+          <div class="collapse" style="margin-top: 14px;">
+            <button type="button"><span>ETA 설정</span><span>100:0 → 80:20 → 60:40</span></button>
+            <div class="body" style="display:block; padding: 0 16px 16px;">
+              <p>초기값은 누적 평균 100, 최근 구간 0으로 시작하고, 운영 상황에 맞춰 점진적으로 최근 구간 비중을 올립니다.</p>
+            </div>
+          </div>
+          <div class="footer">운영판형 비교용 · <a href="/">메인으로</a></div>
+        </aside>
+      </main>
+    </div>
+
+    <script>
+      const collapse = document.getElementById('oob-panel');
+      const toggle = document.getElementById('toggle-oob');
+      toggle.addEventListener('click', () => {
+        collapse.classList.toggle('open');
+        toggle.querySelector('span:last-child').textContent = collapse.classList.contains('open') ? '▴' : '▾';
+      });
+    </script>
+  </body>
+</html>

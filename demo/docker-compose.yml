@@ -1,0 +1,22 @@
+services:
+  app:
+    build:
+      context: ./app
+    container_name: ppolo-demo-app
+    restart: unless-stopped
+    ports:
+      - "28080:28080"
+    expose:
+      - "28080"
+
+  cloudflared:
+    image: cloudflare/cloudflared:latest
+    container_name: ppolo-demo-cloudflared
+    user: "0:0"
+    restart: unless-stopped
+    depends_on:
+      - app
+    command: tunnel --config /etc/cloudflared/config.yml run
+    volumes:
+      - /home/hermes/.cloudflared:/home/hermes/.cloudflared:ro
+      - ./cloudflared:/etc/cloudflared:ro

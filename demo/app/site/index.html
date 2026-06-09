@@ -1,0 +1,114 @@
+<!doctype html>
+<html lang="ko">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>PPOLO Demo</title>
+    <meta
+      name="description"
+      content="PPOLO 화면 프로토타입을 demo.ppolo.org에서 확인하는 정적 데모입니다."
+    />
+    <link rel="stylesheet" href="styles.css" />
+    <script defer src="app.js"></script>
+  </head>
+  <body>
+    <div class="shell">
+      <header class="topbar">
+        <div>
+          <p class="eyebrow">PPOLO / demo.ppolo.org</p>
+          <h1>정적 프로토타입 데모</h1>
+          <p class="lead">
+            HTML · CSS · JS만으로 만드는 화면 예시용 공간입니다.
+            필요한 시나리오를 말해주면 이 공간에 바로 추가합니다.
+          </p>
+        </div>
+        <div class="badge-stack">
+          <span class="badge accent">Cloudflare Tunnel</span>
+          <span class="badge">Docker</span>
+          <span class="badge">Port 28080</span>
+        </div>
+      </header>
+
+      <section class="hero-card">
+        <div class="hero-copy">
+          <p class="section-label">현재 데모 목적</p>
+          <h2>홈 화면, 경쟁방, 실시간 랭킹, 최종 랭킹, 워치 시나리오를 빠르게 보여주는 공간</h2>
+          <p>
+            이 데모는 실제 서비스의 축소판이 아니라, 요구사항 검토와 화면 의사결정을
+            위한 프로토타입 전용 페이지입니다.
+          </p>
+        </div>
+        <div class="hero-grid">
+          <article class="metric-card">
+            <span>기본 포트</span>
+            <strong>28080</strong>
+            <small>서버 내부 앱 포트</small>
+          </article>
+          <article class="metric-card">
+            <span>노출 방식</span>
+            <strong>Tunnel</strong>
+            <small>공인 IP 없이 외부 공개</small>
+          </article>
+          <article class="metric-card">
+            <span>관리 위치</span>
+            <strong>demo/</strong>
+            <small>프로토타입 전용 폴더</small>
+          </article>
+          <article class="metric-card">
+            <span>기본 용도</span>
+            <strong>Static UI</strong>
+            <small>HTML + CSS + JS</small>
+          </article>
+        </div>
+      </section>
+
+      <section class="panel prototype-links">
+        <div class="panel-head">
+          <div>
+            <p class="section-label">프로토타입 링크</p>
+            <h3>서로 다른 홈 화면 시안을 직접 열어 확인합니다</h3>
+          </div>
+          <p class="panel-note">각 파일은 독립 HTML이며, 같은 서비스라도 다른 정보 밀도와 레이아웃을 비교할 수 있습니다.</p>
+        </div>
+        <div class="prototype-grid">
+          <a class="prototype-card" href="/home-prototype-1.html"><strong>시안 1 · 소개형</strong><span>가볍고 읽기 쉬운 첫 인상</span></a>
+          <a class="prototype-card" href="/home-prototype-2.html"><strong>시안 2 · 대시보드형</strong><span>현재 상태를 빠르게 읽는 홈</span></a>
+          <a class="prototype-card" href="/home-prototype-3.html"><strong>시안 3 · 설명형</strong><span>규칙과 흐름을 먼저 이해하는 홈</span></a>
+          <a class="prototype-card" href="/home-prototype-4.html"><strong>시안 4 · 모바일 카드 스택</strong><span>작은 화면에서 편한 세로 흐름</span></a>
+          <a class="prototype-card" href="/home-prototype-5.html"><strong>시안 5 · 운영판형</strong><span>경쟁 / 랭킹 / 공지를 고밀도로 표시</span></a>
+        </div>
+      </section>
+
+      <main class="workspace">
+        <section class="phone-frame" aria-live="polite">
+          <div class="phone-top">
+            <span class="phone-dot"></span>
+            <span class="phone-time">PPOLO Demo</span>
+            <span class="phone-pill" id="screen-pill">HOME</span>
+          </div>
+          <div id="screen-view" class="screen-view"></div>
+        </section>
+
+        <aside class="side-panel">
+          <section class="info-card">
+            <p class="section-label">운영 메모</p>
+            <ul>
+              <li>새 화면 요청이 오면 <code>demo/</code> 아래에 추가합니다.</li>
+              <li>배포는 Docker + Cloudflare Tunnel 기준입니다.</li>
+              <li>앱 내부 포트 기본값은 <code>28080</code> 입니다.</li>
+            </ul>
+          </section>
+          <section class="info-card highlight">
+            <p class="section-label">이 데모에 잘 맞는 요청</p>
+            <ul>
+              <li>홈 화면 정보 밀도 시안</li>
+              <li>경쟁방 진입 플로우</li>
+              <li>실시간 랭킹 / 최종 랭킹 화면</li>
+              <li>워치 리모컨 형태의 보조 UI</li>
+            </ul>
+          </section>
+        </aside>
+      </main>
+    </div>
+  </body>
+</html>

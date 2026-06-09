@@ -1,0 +1,7 @@
+tunnel: 626f0fbb-2f16-4709-b6a5-edc393e69bcd
+credentials-file: /home/hermes/.cloudflared/626f0fbb-2f16-4709-b6a5-edc393e69bcd.json
+
+ingress:
+  - hostname: demo.ppolo.org
+    service: http://app:28080
+  - service: http_status:404
