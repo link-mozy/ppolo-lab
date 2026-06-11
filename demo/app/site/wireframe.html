@@ -526,17 +526,17 @@
         <section class="hero">
           <div class="hero-copy">
             <p class="eyebrow">1. 플로우</p>
-            <h2>진입 → 홈 → 매치방 → 러닝/헬스 기록 → 매치중 → 결과 → 워치</h2>
+            <h2>진입 → 홈 → 기록 / 매치 → 각기 다른 입력 흐름</h2>
             <p class="lead">
-              화면을 따로 보여주지 않고, 사용자의 실제 이동 순서대로 배치했습니다.
-              러닝 기록은 거리/페이스 중심, 헬스 기록은 날짜를 먼저 고른 뒤
-              운동 항목을 하나씩 추가하는 입력 흐름으로 분리합니다.
+              화면을 하나의 단일 경로로 보지 않고, 사용자가 실제로 들어갈 수 있는 주요 시나리오를 분리해 배치했습니다.
+              헬스는 날짜를 먼저 입력하고 운동 항목을 쌓는 방식, 러닝은 기록 입력 방식,
+              매치는 대기실과 측정 중, 결과까지 이어지는 방식으로 다룹니다.
             </p>
           </div>
           <div class="legend">
-            <div class="legend-item"><strong>홈</strong><p>오늘의 상태와 빠른 시작을 보여주는 첫 화면</p></div>
-            <div class="legend-item"><strong>매치방</strong><p>입장 전 정보와 참가자, 시작 조건을 보여주는 화면</p></div>
-            <div class="legend-item"><strong>러닝 / 헬스 기록</strong><p>러닝은 자동 기록, 헬스는 날짜 입력 후 운동 항목을 하나씩 추가하는 입력 화면</p></div>
+            <div class="legend-item"><strong>기록 / 헬스</strong><p>날짜 입력 후 운동 항목을 하나씩 추가하는 수기 입력 플로우</p></div>
+            <div class="legend-item"><strong>기록 / 러닝</strong><p>러닝 기록을 입력하고 저장하는 플로우</p></div>
+            <div class="legend-item"><strong>매치</strong><p>방 입장부터 측정과 결과까지 이어지는 경쟁 플로우</p></div>
             <div class="legend-item"><strong>워치</strong><p>핵심 조작만 남긴 최소 UI</p></div>
           </div>
         </section>
@@ -545,18 +545,16 @@
           <div class="section-head">
             <div>
               <div class="section-index">02 / User journey</div>
-              <h2>상세 화면 흐름</h2>
+              <h2>대표 플로우</h2>
             </div>
-            <p>문서 구조 자체가 앱 시나리오를 따라가도록 정리했다.</p>
+            <p>앱에서 실제로 자주 쓰는 경로를 분리해서 보여준다.</p>
           </div>
 
           <div class="timeline">
-            <div class="step"><strong>1. 홈</strong><p>오늘의 운동 상태와 매치 진입을 확인한다.</p></div>
-            <div class="step"><strong>2. 방 입장</strong><p>방 정보, 참가자, 시작 조건을 본다.</p></div>
-            <div class="step"><strong>3. 러닝 / 헬스 기록</strong><p>러닝은 지도와 페이스 중심, 헬스는 날짜 입력 후 운동 항목을 하나씩 추가한다.</p></div>
-            <div class="step"><strong>4. 매치중</strong><p>우측 상단의 작은 랭킹 오버레이로 현재 순위를 확인한다.</p></div>
-            <div class="step"><strong>5. 결과</strong><p>최종 시간과 순위를 정리한다.</p></div>
-            <div class="step"><strong>6. 워치</strong><p>핵심 조작만 남긴 보조 화면을 사용한다.</p></div>
+            <div class="step"><strong>A. 진입 → 홈 → 기록 → 헬스기록</strong><p>날짜를 먼저 입력하고, 부위·운동명·세트·중량·횟수를 하나씩 추가한다.</p></div>
+            <div class="step"><strong>B. 진입 → 홈 → 기록 → 러닝</strong><p>러닝 기록을 입력하고 저장하는 독립 경로다.</p></div>
+            <div class="step"><strong>C. 진입 → 홈 → 매치 → 대기실 → 매칭중 → 결과</strong><p>방에 들어가 대기하고, 측정 중에는 실시간 상태를 확인한 뒤 결과를 본다.</p></div>
+            <div class="step"><strong>보조. 워치</strong><p>모바일과 연결된 최소 조작 화면을 사용한다.</p></div>
           </div>
         </section>
 
