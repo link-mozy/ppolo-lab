@@ -8,6 +8,8 @@ services:
       - "28080:28080"
     expose:
       - "28080"
+    volumes:
+      - ./app/site:/usr/share/nginx/html:ro
 
   cloudflared:
     image: cloudflare/cloudflared:latest

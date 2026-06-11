@@ -16,10 +16,10 @@
 
 ## 주요 문서
 - `docs/ppolo-system-design.md` — PPOLO 서비스 개요, 아키텍처, 기능, 데이터, 로그 정책
-- `docs/ppolo-competition-ranking-spec.md` — 경쟁 실시간/최종 랭킹 알고리즘 명세
-- `docs/ppolo-competition-state-machine.md` — 경쟁방/참가자 상태 전이와 마감 규칙
+- `docs/ppolo-competition-ranking-spec.md` — 경기 실시간/최종 랭킹 알고리즘 명세
+- `docs/ppolo-competition-state-machine.md` — 경기방/참가자 상태 전이와 마감 규칙
 - `docs/ppolo-requirements-clarified.md` — 사용자 응답 기반 요구사항 확정본과 남은 모호점
-- `docs/ppolo-watch-screen-scenarios.md` — 기록/경쟁 시 워치 화면 시나리오 초안
+- `docs/ppolo-watch-screen-scenarios.md` — 기록/경기 시 워치 화면 시나리오 초안
 
 ## 다음 단계
 스택이 정해지면 아래를 바로 추가합니다.

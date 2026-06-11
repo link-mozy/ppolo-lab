@@ -4,61 +4,86 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>PPOLO 디자인 정의서</title>
-    <meta
-      name="description"
-      content="PPOLO UI/UX 디자인 정의서 - 색, 타이포, 구성, 상태, 검토 기준을 정리한 정적 문서"
-    />
+    <meta name="description" content="PPOLO 디자인 정의서 - Netflix 스타일의 레드/블랙/화이트 중심 UI 기준 문서" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Noto+Sans+KR:wght@400;500;700;900&display=swap" rel="stylesheet" />
     <style>
       :root {
         color-scheme: dark;
-        --bg: #07111f;
-        --bg-2: #091527;
-        --panel: rgba(10, 18, 34, 0.9);
-        --panel-strong: #0b1731;
-        --line: rgba(148, 163, 184, 0.16);
-        --line-strong: rgba(124, 156, 255, 0.28);
-        --text: #edf4ff;
-        --muted: #95a4c3;
-        --accent: #7c9cff;
-        --accent-2: #33d5bf;
-        --warning: #fbbf24;
-        --danger: #ff7b7b;
-        --shadow: 0 26px 70px rgba(0, 0, 0, 0.38);
+        --bg: #050505;
+        --bg-2: #0a0a0a;
+        --surface: #101010;
+        --surface-2: #151515;
+        --surface-3: rgba(255, 255, 255, 0.04);
+        --line: rgba(255, 255, 255, 0.08);
+        --line-strong: rgba(229, 9, 20, 0.42);
+        --text: #ffffff;
+        --muted: #b9b9b9;
+        --muted-2: #8a8a8a;
+        --red: #e50914;
+        --red-2: #ff2d3b;
+        --shadow: 0 26px 70px rgba(0, 0, 0, 0.55);
         --radius-xl: 28px;
         --radius-lg: 22px;
         --radius-md: 16px;
+        --radius-sm: 12px;
+        --max: 1360px;
       }
 
       * { box-sizing: border-box; }
       html, body { margin: 0; min-height: 100%; }
       body {
-        color: var(--text);
-        font-family: Inter, Pretendard, "Noto Sans KR", system-ui, -apple-system, sans-serif;
         background:
-          radial-gradient(circle at top left, rgba(124, 156, 255, 0.15), transparent 24%),
-          radial-gradient(circle at top right, rgba(51, 213, 191, 0.12), transparent 22%),
-          linear-gradient(180deg, #050a13 0%, var(--bg) 100%);
+          radial-gradient(circle at top left, rgba(229, 9, 20, 0.16), transparent 26%),
+          radial-gradient(circle at top right, rgba(229, 9, 20, 0.08), transparent 18%),
+          linear-gradient(180deg, #050505 0%, #090909 100%);
+        color: var(--text);
+        font-family: "Inter", "Noto Sans KR", system-ui, -apple-system, sans-serif;
+        text-rendering: optimizeLegibility;
       }
 
       a { color: inherit; }
+      h1, h2, h3, h4, p { margin-top: 0; }
+      h1 {
+        margin-bottom: 12px;
+        font-size: clamp(2.4rem, 5vw, 4.6rem);
+        line-height: 0.98;
+        letter-spacing: -0.05em;
+      }
+      h2 {
+        margin-bottom: 12px;
+        font-size: clamp(1.5rem, 3vw, 2.2rem);
+        line-height: 1.08;
+        letter-spacing: -0.04em;
+      }
+      h3 { margin-bottom: 8px; font-size: 1.05rem; line-height: 1.2; }
+      p { line-height: 1.8; }
+
       .page {
-        max-width: 1360px;
+        max-width: var(--max);
         margin: 0 auto;
-        padding: 28px 20px 40px;
+        padding: 28px 20px 44px;
       }
 
-      .topbar,
+      .shell,
       .hero,
-      .panel,
+      .section,
       .card,
       .chip,
-      .token,
+      .pill,
+      .box,
       .check,
-      .swatch {
-        background: var(--panel);
+      .swatch,
+      .metric {
+        background: var(--surface);
         border: 1px solid var(--line);
         box-shadow: var(--shadow);
-        backdrop-filter: blur(12px);
+      }
+
+      .shell {
+        border-radius: var(--radius-xl);
+        padding: 26px;
       }
 
       .topbar {
@@ -66,65 +91,117 @@
         justify-content: space-between;
         align-items: flex-start;
         gap: 18px;
-        padding: 24px 26px;
-        border-radius: var(--radius-xl);
+        margin-bottom: 18px;
       }
 
       .eyebrow {
-        margin: 0 0 8px;
+        margin: 0 0 10px;
         font-size: 12px;
-        letter-spacing: 0.14em;
+        letter-spacing: 0.16em;
         text-transform: uppercase;
-        color: var(--accent-2);
+        color: #ff8f98;
       }
 
-      h1, h2, h3, h4, p { margin-top: 0; }
-      h1 { margin-bottom: 10px; font-size: clamp(2rem, 4vw, 3.4rem); }
-      .lead { margin: 0; color: var(--muted); line-height: 1.75; max-width: 72ch; }
-      .chip-row { display: flex; flex-wrap: wrap; gap: 10px; align-content: flex-start; }
+      .lead {
+        margin: 0;
+        max-width: 74ch;
+        color: var(--muted);
+      }
+
+      .chip-row {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 10px;
+        justify-content: flex-end;
+      }
       .chip {
         display: inline-flex;
         align-items: center;
         gap: 8px;
         padding: 10px 14px;
         border-radius: 999px;
-        color: var(--text);
         font-size: 13px;
         white-space: nowrap;
+        background: rgba(255, 255, 255, 0.03);
       }
-      .chip.accent { color: var(--accent-2); border-color: rgba(51, 213, 191, 0.28); }
-      .chip.warn { color: #fdd36b; border-color: rgba(251, 191, 36, 0.24); }
+      .chip.red { border-color: rgba(229, 9, 20, 0.35); color: #ffd1d4; }
+      .chip.white { border-color: rgba(255, 255, 255, 0.16); color: #fff; }
+      .chip.soft { color: var(--muted); }
 
       .hero {
-        margin-top: 20px;
+        margin-top: 18px;
         border-radius: var(--radius-xl);
         padding: 26px;
         display: grid;
-        grid-template-columns: 1.1fr 0.9fr;
-        gap: 20px;
+        grid-template-columns: 1.2fr 0.8fr;
+        gap: 18px;
+        background:
+          linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01)),
+          linear-gradient(135deg, rgba(229, 9, 20, 0.18), rgba(10, 10, 10, 0.92) 36%, rgba(10, 10, 10, 0.98));
+        border-color: rgba(255, 255, 255, 0.08);
       }
 
-      .hero h2 {
-        margin-bottom: 12px;
-        font-size: clamp(1.55rem, 3vw, 2.35rem);
+      .hero-copy .lead {
+        font-size: 1.02rem;
+        max-width: 68ch;
       }
 
-      .hero-steps {
+      .hero-side {
         display: grid;
-        gap: 12px;
+        gap: 14px;
       }
 
-      .step {
+      .meta,
+      .card,
+      .box,
+      .check,
+      .swatch,
+      .metric,
+      .section-card {
         border-radius: var(--radius-lg);
-        padding: 16px 18px;
-        border: 1px solid var(--line);
-        background: linear-gradient(180deg, rgba(15, 23, 42, 0.94), rgba(7, 17, 31, 0.98));
       }
 
-      .step strong { display: block; margin-bottom: 6px; }
-      .step span { color: var(--muted); line-height: 1.6; }
+      .meta {
+        padding: 18px;
+        background: rgba(255, 255, 255, 0.03);
+        border: 1px solid rgba(255, 255, 255, 0.08);
+      }
+      .meta strong { display: block; margin-bottom: 6px; }
+      .meta p { margin: 0; color: var(--muted); }
 
-      .section { margin-top: 22px; }
+      .summary-grid {
+        margin-top: 20px;
+        display: grid;
+        grid-template-columns: repeat(4, minmax(0, 1fr));
+        gap: 14px;
+      }
+      .metric {
+        padding: 18px;
+        background: linear-gradient(180deg, rgba(255,255,255,0.03), rgba(255,255,255,0.02));
+      }
+      .metric span {
+        display: block;
+        margin-bottom: 12px;
+        font-size: 12px;
+        color: #ffb0b5;
+        letter-spacing: 0.14em;
+        text-transform: uppercase;
+      }
+      .metric strong {
+        display: block;
+        margin-bottom: 8px;
+        font-size: clamp(1.45rem, 3vw, 2.05rem);
+        letter-spacing: -0.04em;
+      }
+      .metric small { color: var(--muted); line-height: 1.6; }
+
+      .section {
+        margin-top: 22px;
+        padding: 20px;
+        border-radius: var(--radius-xl);
+        background: linear-gradient(180deg, rgba(17,17,17,0.96), rgba(12,12,12,0.98));
+      }
+
       .section-head {
         display: flex;
         justify-content: space-between;
@@ -132,270 +209,439 @@
         align-items: end;
         margin-bottom: 16px;
       }
-      .section-head h2 { margin-bottom: 4px; }
-      .section-note { margin: 0; color: var(--muted); line-height: 1.6; }
-
-      .grid-2 { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 14px; }
-      .grid-3 { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 14px; }
-      .grid-4 { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 12px; }
-
-      .card {
-        border-radius: var(--radius-lg);
-        padding: 18px;
-      }
-      .card h3, .card h4 { margin-bottom: 10px; }
-      .card p, .card li { color: var(--muted); line-height: 1.7; }
-      .card ul { margin: 0; padding-left: 18px; }
-      .card li + li { margin-top: 8px; }
-
-      .swatch {
-        border-radius: 20px;
-        padding: 16px;
-      }
-      .swatch-box {
-        height: 92px;
-        border-radius: 16px;
-        margin-bottom: 12px;
-        border: 1px solid rgba(255, 255, 255, 0.08);
-      }
-      .swatch strong { display: block; margin-bottom: 6px; }
-      .swatch small { color: var(--muted); line-height: 1.5; }
-
-      .token {
-        border-radius: 18px;
-        padding: 16px;
-      }
-      .token code,
-      .check code {
-        background: rgba(255, 255, 255, 0.06);
-        border: 1px solid rgba(255, 255, 255, 0.08);
-        padding: 2px 6px;
-        border-radius: 8px;
-        color: #dce8ff;
-      }
-      .token span { display: block; margin-bottom: 8px; color: var(--muted); }
-      .token strong { display: block; margin-bottom: 10px; }
-
-      .status {
+      .section-head p { margin: 0; color: var(--muted); }
+      .section-index {
         display: inline-flex;
         align-items: center;
         gap: 8px;
-        padding: 8px 12px;
-        border-radius: 999px;
-        background: rgba(51, 213, 191, 0.08);
-        border: 1px solid rgba(51, 213, 191, 0.18);
-        color: #bdf8ef;
+        color: #ff8f98;
         font-size: 12px;
-        font-weight: 700;
+        font-weight: 800;
+        letter-spacing: 0.16em;
+        text-transform: uppercase;
       }
-      .status.warn { background: rgba(251, 191, 36, 0.08); border-color: rgba(251, 191, 36, 0.18); color: #ffe5a1; }
-      .status.danger { background: rgba(255, 123, 123, 0.08); border-color: rgba(255, 123, 123, 0.18); color: #ffc7c7; }
 
-      .check {
-        border-radius: var(--radius-lg);
-        padding: 16px 18px;
+      .grid-2 { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 14px; }
+      .grid-3 { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 14px; }
+
+      .card,
+      .box,
+      .check,
+      .section-card {
+        padding: 18px;
+        background: rgba(255,255,255,0.025);
+        border: 1px solid rgba(255,255,255,0.08);
       }
-      .check strong { display: block; margin-bottom: 6px; }
-      .check p { margin-bottom: 0; color: var(--muted); line-height: 1.65; }
+      .card p, .box p, .check p, .section-card p, .card li, .box li, .check li, .section-card li {
+        color: var(--muted);
+      }
+      .card ul, .box ul, .check ul, .section-card ul {
+        margin: 0;
+        padding-left: 18px;
+      }
+      .card li + li, .box li + li, .check li + li, .section-card li + li {
+        margin-top: 8px;
+      }
 
-      .flow {
+      .tokens {
+        display: grid;
+        grid-template-columns: 1.15fr 0.85fr;
+        gap: 14px;
+      }
+
+      .swatch-row {
         display: grid;
         gap: 12px;
       }
-      .flow-item {
-        border-radius: 18px;
-        border: 1px solid var(--line);
-        background: rgba(255, 255, 255, 0.03);
-        padding: 14px 16px;
+      .swatch-meta {
+        display: flex;
+        justify-content: space-between;
+        gap: 12px;
+        align-items: baseline;
+        margin-bottom: 10px;
       }
-      .flow-item strong { display: block; margin-bottom: 6px; }
-      .flow-item p { margin: 0; color: var(--muted); line-height: 1.6; }
+      .swatch-meta strong { font-size: 0.98rem; }
+      .swatch-meta span { color: var(--muted-2); font-size: 12px; }
+      .swatch {
+        height: 92px;
+        border-radius: 18px;
+        border: 1px solid rgba(255,255,255,0.08);
+      }
+      .swatch.dark { background: linear-gradient(135deg, #151515 0%, #050505 100%); }
+      .swatch.red { background: linear-gradient(135deg, #ff3a49 0%, #e50914 100%); }
+      .swatch.white { background: linear-gradient(135deg, #ffffff 0%, #d9d9d9 100%); }
+      .swatch.gray { background: linear-gradient(135deg, #2a2a2a 0%, #111111 100%); }
+
+      .tone-row {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 10px;
+      }
+      .pill {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        padding: 10px 12px;
+        border-radius: 999px;
+        background: rgba(255,255,255,0.03);
+        color: #fff;
+      }
+      .pill.red { border-color: rgba(229, 9, 20, 0.35); }
+      .pill.white { border-color: rgba(255,255,255,0.16); }
+      .pill.gray { border-color: rgba(255,255,255,0.08); color: var(--muted); }
+
+      .rule-grid {
+        display: grid;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: 14px;
+      }
+      .rule {
+        padding: 16px 18px;
+        border-radius: 18px;
+        background: rgba(255,255,255,0.03);
+        border: 1px solid rgba(255,255,255,0.08);
+      }
+      .rule strong { display: block; margin-bottom: 6px; }
+      .rule p { margin: 0; color: var(--muted); }
+
+      .component-grid {
+        display: grid;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: 14px;
+      }
+      .component-preview {
+        min-height: 170px;
+        padding: 18px;
+        border-radius: 20px;
+        background: linear-gradient(180deg, rgba(255,255,255,0.03), rgba(255,255,255,0.02));
+        border: 1px solid rgba(255,255,255,0.08);
+      }
+      .component-preview strong { display: block; margin-bottom: 8px; }
+      .component-preview p { margin-bottom: 16px; }
+      .component-bar {
+        height: 13px;
+        border-radius: 999px;
+        background: rgba(255,255,255,0.08);
+        overflow: hidden;
+      }
+      .component-bar span {
+        display: block;
+        height: 100%;
+        border-radius: inherit;
+        background: linear-gradient(90deg, var(--red), var(--red-2));
+      }
+      .component-bar.white span { background: linear-gradient(90deg, #fff, #d8d8d8); }
+      .component-bar.gray span { background: linear-gradient(90deg, #8d8d8d, #5f5f5f); }
+
+      .check-grid {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 14px;
+      }
 
       .footer {
         margin-top: 20px;
-        color: var(--muted);
-        font-size: 13px;
         display: flex;
         justify-content: space-between;
         gap: 16px;
         align-items: center;
+        color: var(--muted);
+        font-size: 13px;
       }
-      .footer a { color: var(--accent-2); text-decoration: none; font-weight: 700; }
+      .footer a {
+        color: #ffb0b5;
+        text-decoration: none;
+        font-weight: 700;
+      }
 
-      @media (max-width: 1080px) {
+      @media (max-width: 1100px) {
         .topbar,
         .hero,
+        .summary-grid,
+        .tokens,
         .grid-2,
         .grid-3,
-        .grid-4 { grid-template-columns: 1fr; display: grid; }
-        .topbar { display: grid; }
-        .section-head { display: grid; }
-        .footer { display: grid; }
+        .rule-grid,
+        .component-grid,
+        .check-grid {
+          grid-template-columns: 1fr;
+          display: grid;
+        }
+        .topbar,
+        .section-head,
+        .footer {
+          display: grid;
+        }
+        .chip-row { justify-content: flex-start; }
       }
     </style>
   </head>
   <body>
     <div class="page">
-      <header class="topbar">
-        <div>
-          <p class="eyebrow">PPOLO / DESIGN DOCUMENT</p>
-          <h1>디자인 정의서</h1>
-          <p class="lead">
-            이 문서는 PPOLO의 UI/UX 기준을 한눈에 확인하기 위한 CSS 기반 디자인 정의서 초안입니다.
-            목표는 화면마다 다른 표현을 쓰더라도 색·간격·상태·정보 우선순위가 흔들리지 않도록 만드는 것입니다.
-          </p>
-        </div>
-        <div class="chip-row">
-          <span class="chip accent">공개 경로: design.html</span>
-          <span class="chip">검토 대상: UI / UX</span>
-          <span class="chip warn">확인 포인트: 구조 · 플로우 · 부족한 내용</span>
-        </div>
-      </header>
-
-      <section class="hero">
-        <div>
-          <p class="eyebrow">핵심 요약</p>
-          <h2>운동 기록과 경쟁을 같은 서비스로 느끼게 하되, 화면은 목적별로 분리한다.</h2>
-          <p class="lead">
-            홈은 현재 상태를 빠르게 읽는 곳, 운동 기록은 입력과 확인을 분리하는 곳,
-            경쟁은 시작 전 대기와 실시간 측정을 분리하는 곳, 워치는 최소 리모컨으로 동작하는 곳입니다.
-          </p>
-        </div>
-        <div class="hero-steps">
-          <div class="step"><strong>1. 색과 톤</strong><span>짙은 네이비 배경 + 청록/블루 액센트로 활동적인 인상을 유지합니다.</span></div>
-          <div class="step"><strong>2. 정보 구조</strong><span>상단 요약 → 핵심 카드 → 세부 목록 → 행동 버튼 순서로 읽히게 합니다.</span></div>
-          <div class="step"><strong>3. 상태 문구</strong><span>측정 대기 / 측정 중 / 측정 완료 / 경쟁중 같은 상태를 문서 전체에서 일관되게 씁니다.</span></div>
-        </div>
-      </section>
-
-      <section class="section">
-        <div class="section-head">
+      <div class="shell">
+        <header class="topbar">
           <div>
-            <p class="eyebrow">1. 디자인 토큰</p>
-            <h2>색 / 타이포 / 간격 / 라운드 / 그림자</h2>
+            <p class="eyebrow">PPOLO / DESIGN DOCUMENT</p>
+            <h1>디자인 정의서</h1>
+            <p class="lead">
+              PPOLO의 디자인은 *넷플릭스처럼 강한 레드/블랙 대비*를 기본으로 하고,
+              텍스트는 *화이트 중심*으로 정리합니다.
+              전체 인상은 다크하고 시네마틱하게 유지하되, 핵심 정보와 행동 버튼은 한눈에 읽히도록 설계합니다.
+            </p>
           </div>
-          <p class="section-note">화면마다 동일한 룩을 유지하기 위한 공통 규칙입니다.</p>
-        </div>
-        <div class="grid-4">
-          <article class="swatch">
-            <div class="swatch-box" style="background: linear-gradient(135deg, #050a13, #0b1731);"></div>
-            <strong>배경</strong>
-            <small><code>#07111f</code> 계열을 기본 배경으로 사용합니다.</small>
-          </article>
-          <article class="swatch">
-            <div class="swatch-box" style="background: linear-gradient(135deg, #7c9cff, #33d5bf);"></div>
-            <strong>액센트</strong>
-            <small>버튼, 강조 수치, 상태 라벨은 블루/청록 계열을 사용합니다.</small>
-          </article>
-          <article class="swatch">
-            <div class="swatch-box" style="background: linear-gradient(135deg, rgba(255,255,255,.9), rgba(144,163,196,.55));"></div>
-            <strong>텍스트</strong>
-            <small>제목은 밝게, 설명은 <code>muted</code> 톤으로 내려 읽기 흐름을 만듭니다.</small>
-          </article>
-          <article class="swatch">
-            <div class="swatch-box" style="background: linear-gradient(135deg, rgba(20,28,48,.95), rgba(10,18,34,.95));"></div>
-            <strong>패널</strong>
-            <small>카드는 반투명 패널을 기본으로 하고, 구분선으로 정보 덩어리를 나눕니다.</small>
-          </article>
-        </div>
-      </section>
-
-      <section class="section grid-2">
-        <article class="card">
-          <p class="eyebrow">2. 타이포그래피</p>
-          <h3>제목은 짧게, 본문은 충분히, 숫자는 크게</h3>
-          <ul>
-            <li>큰 제목은 화면 목적을 즉시 드러내는 단어만 사용합니다.</li>
-            <li>설명 문장은 2줄 안팎으로 유지해 읽는 부담을 줄입니다.</li>
-            <li>시간, 거리, 순위 같은 숫자는 카드 안에서 가장 먼저 보이도록 키웁니다.</li>
-            <li>영문 상태 키는 내부 문서에서만 쓰고, 화면에는 한국어 상태명을 우선 노출합니다.</li>
-          </ul>
-        </article>
-        <article class="card">
-          <p class="eyebrow">3. 컴포넌트 규칙</p>
-          <h3>모든 화면에서 반복되는 요소</h3>
-          <ul>
-            <li>상단 제목 + 설명 + 상태 칩 조합</li>
-            <li>핵심 KPI 카드 3개 정도의 압축 요약</li>
-            <li>행동 버튼은 보이더라도 너무 많지 않게 유지</li>
-            <li>목록형 화면은 한 줄 요약 + 보조 정보 + 상태 배지로 통일</li>
-          </ul>
-        </article>
-      </section>
-
-      <section class="section">
-        <div class="section-head">
-          <div>
-            <p class="eyebrow">4. 화면별 표현 원칙</p>
-            <h2>같은 서비스지만, 화면의 역할은 분명히 다르게</h2>
+          <div class="chip-row">
+            <span class="chip red">공개 경로: design.html</span>
+            <span class="chip white">톤: Red / Black / White</span>
+            <span class="chip soft">검토 대상: UI / UX / Brand</span>
           </div>
-          <p class="section-note">PPOLO는 기록, 경쟁, 결과 확인의 목적이 달라 화면 밀도도 달라야 합니다.</p>
-        </div>
-        <div class="grid-3">
-          <article class="card">
-            <h3>접속 로딩 / 로그인</h3>
-            <p>부드러운 진입만 보여주고, 사용자 판단을 요구하지 않습니다. 실패 시에는 이유를 짧게 보여줍니다.</p>
-          </article>
-          <article class="card">
-            <h3>홈 / 기록</h3>
-            <p>대시보드 형태로 현재 상태를 먼저 보여주고, 상세 입력은 기록 화면으로 분리합니다.</p>
-          </article>
-          <article class="card">
-            <h3>경쟁 / 랭킹</h3>
-            <p>대기실과 측정 중 화면을 분리하고, 실시간 랭킹과 최종 랭킹은 서로 다른 우선순위를 가집니다.</p>
-          </article>
-        </div>
-      </section>
+        </header>
 
-      <section class="section grid-2">
-        <article class="card">
-          <p class="eyebrow">5. 상태 디자인</p>
-          <h3>상태는 색보다 문구로 먼저 읽히게</h3>
-          <div class="flow">
-            <div class="flow-item"><strong><span class="status">대기 / 준비</span></strong><p>입장 전, 경쟁 준비, 로딩처럼 사용자가 행동을 멈추고 확인하는 상태입니다.</p></div>
-            <div class="flow-item"><strong><span class="status">진행 / 측정 중</span></strong><p>운동 기록 또는 경쟁이 실제로 누적되는 구간입니다. 핵심 숫자가 계속 바뀝니다.</p></div>
-            <div class="flow-item"><strong><span class="status warn">일시정지 / 경고</span></strong><p>사용자 행동이 중단됐거나 검토가 필요한 상태입니다. 버튼 수를 줄입니다.</p></div>
-            <div class="flow-item"><strong><span class="status danger">종료 / 취소 / 실격</span></strong><p>되돌리기보다 결과를 읽는 단계입니다. 이때는 상태 설명을 명확히 둡니다.</p></div>
+        <section class="hero">
+          <div class="hero-copy">
+            <p class="eyebrow">1. 디자인 방향</p>
+            <h2>검은 배경 위에 선명한 레드 포인트를 얹고, 모든 텍스트는 화이트로 읽히게 한다.</h2>
+            <p class="lead">
+              이 문서는 보기 좋은 포스터가 아니라, 실제 앱을 만들 때 흔들리지 않도록 기준을 정리한 문서입니다.
+              홈, 기록, 경기, 결과 화면이 모두 같은 세계관에 있지만, 각 화면의 역할은 분명히 달라야 합니다.
+            </p>
           </div>
-        </article>
-        <article class="card">
-          <p class="eyebrow">6. 접근성 / 가독성</p>
-          <h3>빠르게 읽을 수 있어야 한다</h3>
-          <ul>
-            <li>주요 버튼은 큰 터치 영역을 유지합니다.</li>
-            <li>같은 정보는 색만으로 구분하지 않고 텍스트도 함께 둡니다.</li>
-            <li>화면마다 주요 행동 버튼은 1~2개 수준으로 제한합니다.</li>
-            <li>워치와 모바일은 같은 상태 언어를 쓰되, 표현 밀도만 다르게 합니다.</li>
-          </ul>
-        </article>
-      </section>
-
-      <section class="section grid-2">
-        <article class="card">
-          <p class="eyebrow">7. 확인 기준</p>
-          <h3>이 정의서가 타당한지 볼 때 체크할 항목</h3>
-          <div class="flow">
-            <div class="check"><strong>내용 부족 여부</strong><p>화면 목적, 사용자, 주요 행동, 예외 상태가 빠진 부분이 없는지 본다.</p></div>
-            <div class="check"><strong>구조 타당성</strong><p>한 화면에 여러 목적이 섞이지 않고, 필요한 경우 별도 화면으로 분리돼 있는지 본다.</p></div>
-            <div class="check"><strong>플로우 적합성</strong><p>접속 → 로그인 → 홈 → 기록/경쟁 → 결과 확인으로 자연스럽게 이동하는지 본다.</p></div>
+          <div class="hero-side">
+            <div class="meta">
+              <strong>핵심 인상</strong>
+              <p>다크 · 몰입감 · 긴장감 · 강한 대비</p>
+            </div>
+            <div class="meta">
+              <strong>행동 원칙</strong>
+              <p>중요한 버튼만 빨갛게, 나머지는 흰색/회색으로 정리한다.</p>
+            </div>
+            <div class="meta">
+              <strong>문서 성격</strong>
+              <p>설명서가 아니라 디자인 기준서처럼 보이게 한다.</p>
+            </div>
           </div>
-        </article>
-        <article class="card">
-          <p class="eyebrow">8. 아직 확인할 항목</p>
-          <h3>현재 초안에서 남겨둔 질문</h3>
-          <ul>
-            <li>공지/이벤트를 홈에서 어느 비중으로 둘지</li>
-            <li>경쟁방 생성에서 합의 결정의 기본값을 무엇으로 둘지</li>
-            <li>로그인 오류와 네트워크 오류를 같은 화면 패턴으로 둘지</li>
-            <li>워치 화면의 상태 요약 문구를 더 짧게 압축할지</li>
-          </ul>
-        </article>
-      </section>
+        </section>
 
-      <footer class="footer">
-        <div>확인 경로: <a href="/design.html">/design.html</a></div>
-        <div><a href="/wireframe.html">와이어프레임 초안 보기</a></div>
-      </footer>
+        <section class="summary-grid">
+          <article class="metric">
+            <span>Base Mood</span>
+            <strong>Dark Cinema</strong>
+            <small>배경은 거의 블랙, 표면은 약간 밝게 구분한다.</small>
+          </article>
+          <article class="metric">
+            <span>Primary Accent</span>
+            <strong>Netflix Red</strong>
+            <small>행동과 강조만 레드로 처리해 시선을 모은다.</small>
+          </article>
+          <article class="metric">
+            <span>Text Color</span>
+            <strong>White First</strong>
+            <small>제목과 본문은 화이트 계열을 우선 사용한다.</small>
+          </article>
+          <article class="metric">
+            <span>Document Goal</span>
+            <strong>Legible Rules</strong>
+            <small>실제 개발자가 바로 적용할 수 있는 기준을 적는다.</small>
+          </article>
+        </section>
+
+        <section class="section">
+          <div class="section-head">
+            <div>
+              <div class="section-index">02 / Colors, type, surfaces</div>
+              <h2>색 / 타이포 / 표면</h2>
+            </div>
+            <p>레드와 블랙만으로도 충분히 강한 인상을 만든다.</p>
+          </div>
+
+          <div class="tokens">
+            <div class="section-card">
+              <h3>표면과 대비</h3>
+              <p>
+                배경은 완전한 블랙에 가깝게 두고, 카드와 패널은 한 톤만 밝게 구분한다.
+                장식성 그라데이션은 줄이고, 정보 계층은 텍스트 크기와 여백으로 만든다.
+              </p>
+              <div class="tone-row">
+                <span class="pill red">#E50914</span>
+                <span class="pill white">#FFFFFF</span>
+                <span class="pill gray">#111111</span>
+                <span class="pill gray">#B9B9B9</span>
+              </div>
+              <div style="height:14px"></div>
+              <div class="grid-2">
+                <div class="card">
+                  <h3>Typography</h3>
+                  <ul>
+                    <li>제목은 굵고 짧게, 본문은 길어도 읽기 쉽게 쓴다.</li>
+                    <li>숫자와 상태는 일반 본문보다 더 큰 크기로 보여준다.</li>
+                    <li>화이트를 기본으로 두고, 강조는 레드로만 제한한다.</li>
+                  </ul>
+                </div>
+                <div class="card">
+                  <h3>Spacing</h3>
+                  <ul>
+                    <li>섹션 간격은 충분히 크게, 카드 내부는 단정하게 유지한다.</li>
+                    <li>모바일 기준 터치 타깃은 44px 이상을 유지한다.</li>
+                    <li>여백이 부족하면 내용이 아니라 구조를 먼저 고친다.</li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+
+            <div class="swatch-row">
+              <div class="card">
+                <div class="swatch-meta"><strong>Background</strong><span>Deep Black</span></div>
+                <div class="swatch dark"></div>
+              </div>
+              <div class="card">
+                <div class="swatch-meta"><strong>Primary Red</strong><span>Attention</span></div>
+                <div class="swatch red"></div>
+              </div>
+              <div class="card">
+                <div class="swatch-meta"><strong>White</strong><span>Text First</span></div>
+                <div class="swatch white"></div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section class="section">
+          <div class="section-head">
+            <div>
+              <div class="section-index">03 / Layout rules</div>
+              <h2>레이아웃과 정보 우선순위</h2>
+            </div>
+            <p>화면마다 가장 먼저 읽혀야 하는 정보만 상단에 둔다.</p>
+          </div>
+
+          <div class="rule-grid">
+            <div class="rule">
+              <strong>홈</strong>
+              <p>현재 상태, 빠른 시작, 최근 기록, 공지처럼 사용자가 바로 행동할 요소를 앞에 둔다.</p>
+            </div>
+            <div class="rule">
+              <strong>기록</strong>
+              <p>리스트와 상세를 분리하고, 입력/수정은 강한 버튼 한두 개만 남긴다.</p>
+            </div>
+            <div class="rule">
+              <strong>경기 / 결과</strong>
+              <p>랭킹, 남은 시간, 내 상태를 크게 보여주고 나머지는 보조 정보로 낮춘다.</p>
+            </div>
+          </div>
+        </section>
+
+        <section class="section">
+          <div class="section-head">
+            <div>
+              <div class="section-index">04 / Component language</div>
+              <h2>컴포넌트 정의</h2>
+            </div>
+            <p>각 컴포넌트의 목적, 형태, 상태를 짧고 명확하게 적는다.</p>
+          </div>
+
+          <div class="component-grid" style="margin-bottom:14px;">
+            <div class="component-preview">
+              <strong>Primary button</strong>
+              <p>가장 중요한 행동 1개만 담당한다. 배경은 레드, 텍스트는 화이트, 라벨은 짧게 유지한다.</p>
+              <div class="component-bar"><span style="width:86%"></span></div>
+            </div>
+            <div class="component-preview">
+              <strong>Secondary button</strong>
+              <p>보조 행동을 위한 버튼이다. 표면은 다크, 경계선은 얇게, 레드 사용은 최소화한다.</p>
+              <div class="component-bar white"><span style="width:72%"></span></div>
+            </div>
+            <div class="component-preview">
+              <strong>Status pill</strong>
+              <p>상태를 먼저 읽히게 한다. 텍스트가 우선이고 색은 보조 신호 역할만 맡는다.</p>
+              <div class="component-bar gray"><span style="width:58%"></span></div>
+            </div>
+          </div>
+
+          <div class="grid-2">
+            <div class="card">
+              <h3>Card / Panel</h3>
+              <ul>
+                <li>목적: 정보 묶음, 설정 묶음, 요약 묶음을 분리한다.</li>
+                <li>구조: 제목 → 본문 → 보조 액션 순서로 정리한다.</li>
+                <li>상태: 기본 / 선택됨 / 비활성 / 강조됨을 구분한다.</li>
+                <li>규칙: 카드 자체가 장식이 아니라 정보 컨테이너가 되게 한다.</li>
+              </ul>
+            </div>
+            <div class="card">
+              <h3>Ranking row / Input</h3>
+              <ul>
+                <li>랭킹 행은 순위 숫자, 이름, 점수, 상태를 한 줄에 압축한다.</li>
+                <li>입력은 라벨과 도움말을 분리해 읽기 쉬운 구조를 유지한다.</li>
+                <li>오류·비활성·로딩 상태는 문구로 먼저 보여준다.</li>
+                <li>탭 가능한 영역은 모바일에서 충분히 크게 잡는다.</li>
+              </ul>
+            </div>
+          </div>
+        </section>
+
+        <section class="section">
+          <div class="section-head">
+            <div>
+              <div class="section-index">05 / State and motion</div>
+              <h2>상태는 색보다 문구로 먼저 보이게</h2>
+            </div>
+            <p>움직임은 적게, 변화는 분명하게.</p>
+          </div>
+
+          <div class="check-grid">
+            <div class="check">
+              <h3>상태 규칙</h3>
+              <ul>
+                <li>진행 중: 시간, 진행 바, 현재 순위를 묶어서 보여준다.</li>
+                <li>대기 중: 시작 조건과 남은 시간을 분리해서 보여준다.</li>
+                <li>완료: 결과와 다음 행동만 남겨 조작을 줄인다.</li>
+              </ul>
+            </div>
+            <div class="check">
+              <h3>모션 규칙</h3>
+              <ul>
+                <li>전환은 짧고 부드럽게, 과장된 연출은 피한다.</li>
+                <li>랭킹 변화는 숫자 중심으로 안정적으로 보여준다.</li>
+                <li>운동 중 화면은 시선을 빼앗는 장식을 최소화한다.</li>
+              </ul>
+            </div>
+          </div>
+        </section>
+
+        <section class="section">
+          <div class="section-head">
+            <div>
+              <div class="section-index">06 / Review checklist</div>
+              <h2>검토 체크리스트</h2>
+            </div>
+            <p>이 문서는 멋보다 적용 가능성이 먼저다.</p>
+          </div>
+
+          <div class="grid-2">
+            <div class="box">
+              <strong>확인 기준</strong>
+              <ul>
+                <li>검은 배경 + 레드 포인트 + 화이트 텍스트로 일관되는가?</li>
+                <li>버튼/상태/중요 정보만 눈에 띄는가?</li>
+                <li>홈, 기록, 경기, 결과가 같은 시스템 안에서 읽히는가?</li>
+                <li>문서가 실제 디자인 기준서처럼 보이는가?</li>
+              </ul>
+            </div>
+            <div class="box">
+              <strong>남겨둔 질문</strong>
+              <ul>
+                <li>메인 레드를 더 진하게 할지, 현재 수준으로 유지할지</li>
+                <li>카드의 표면감을 더 줄이고 평면적으로 갈지</li>
+                <li>와이어프레임도 같은 레드/블랙 체계로 더 맞출지</li>
+              </ul>
+            </div>
+          </div>
+        </section>
+
+        <footer class="footer">
+          <div>확인 경로: <a href="/wireframe.html">와이어프레임 초안 보기</a></div>
+          <div>문서 버전 v2 · Netflix-inspired dark style</div>
+        </footer>
+      </div>
     </div>
   </body>
 </html>
