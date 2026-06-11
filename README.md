@@ -21,6 +21,9 @@
 - `docs/ppolo-requirements-clarified.md` — 사용자 응답 기반 요구사항 확정본과 남은 모호점
 - `docs/ppolo-watch-screen-scenarios.md` — 기록/경기 시 워치 화면 시나리오 초안
 
+## 관련 레포
+- `ppolo-native-ios` — PPOLO 네이티브 iOS 앱 레포
+
 ## 다음 단계
 스택이 정해지면 아래를 바로 추가합니다.
 - 실행 환경

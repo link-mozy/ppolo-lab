@@ -224,6 +224,36 @@
         overflow: hidden;
         border: 1px solid rgba(255, 255, 255, 0.08);
       }
+      .phone-overlay {
+        position: absolute;
+        top: 64px;
+        right: 16px;
+        z-index: 2;
+        min-width: 92px;
+        padding: 10px 12px;
+        border-radius: 18px;
+        background: rgba(0, 0, 0, 0.72);
+        border: 1px solid rgba(255, 255, 255, 0.08);
+        backdrop-filter: blur(12px);
+        box-shadow: 0 12px 30px rgba(0, 0, 0, 0.35);
+      }
+      .phone-overlay small {
+        display: block;
+        color: var(--muted);
+        font-size: 11px;
+        margin-bottom: 4px;
+      }
+      .phone-overlay strong {
+        display: block;
+        font-size: 1.35rem;
+        line-height: 1;
+      }
+      .phone-overlay span {
+        display: block;
+        margin-top: 4px;
+        color: #ffd5d9;
+        font-size: 11px;
+      }
       .phone::before {
         content: "";
         position: absolute;
@@ -256,6 +286,57 @@
       }
       .hero-card strong { display: block; margin-bottom: 8px; }
       .hero-card p { margin: 0; color: var(--muted); }
+      .hero-card.center {
+        text-align: center;
+        padding: 20px 16px;
+      }
+      .hero-card.center strong {
+        margin-bottom: 4px;
+        font-size: 2.35rem;
+        line-height: 0.95;
+        letter-spacing: -0.06em;
+      }
+      .hero-card.center span {
+        display: block;
+        margin-bottom: 8px;
+        color: #ffffff;
+        font-size: 12px;
+        letter-spacing: 0.12em;
+        text-transform: uppercase;
+      }
+      .map-panel {
+        min-height: 170px;
+        display: grid;
+        align-items: end;
+        background:
+          linear-gradient(180deg, rgba(255, 255, 255, 0.05), rgba(255, 255, 255, 0.02)),
+          radial-gradient(circle at 20% 25%, rgba(255, 255, 255, 0.09), transparent 18%),
+          radial-gradient(circle at 75% 35%, rgba(255, 255, 255, 0.06), transparent 16%),
+          linear-gradient(135deg, rgba(229, 9, 20, 0.12), rgba(0, 0, 0, 0.18));
+      }
+      .map-panel::after {
+        content: "지도 영역 / 경로 표시";
+        display: inline-block;
+        margin-top: 10px;
+        color: #ffffff;
+        font-size: 12px;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+      }
+      .metric-grid {
+        display: grid;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: 10px;
+      }
+      .metric {
+        padding: 12px;
+        border-radius: 18px;
+        background: rgba(255, 255, 255, 0.03);
+        border: 1px solid rgba(255, 255, 255, 0.06);
+      }
+      .metric span { display: block; margin-bottom: 6px; color: var(--muted); font-size: 12px; }
+      .metric strong { display: block; font-size: 1.05rem; }
+      .metric.big strong { font-size: 1.3rem; }
       .progress {
         height: 10px;
         border-radius: 999px;
@@ -445,16 +526,17 @@
         <section class="hero">
           <div class="hero-copy">
             <p class="eyebrow">1. 플로우</p>
-            <h2>진입 → 홈 → 매치방 → 운동 중 → 실시간 랭킹 → 결과 → 워치</h2>
+            <h2>진입 → 홈 → 매치방 → 러닝 기록 → 매치중 → 결과 → 워치</h2>
             <p class="lead">
               화면을 따로 보여주지 않고, 사용자의 실제 이동 순서대로 배치했습니다.
-              각 화면은 역할이 분명해야 하며, 중요한 행동은 늘 같은 위치와 같은 우선순위를 유지해야 합니다.
+              러닝 기록과 매치중 화면은 업로드한 이미지처럼 같은 시각 언어를 공유하되,
+              매치중에서는 우측 상단 랭킹 오버레이가 추가됩니다.
             </p>
           </div>
           <div class="legend">
             <div class="legend-item"><strong>홈</strong><p>오늘의 상태와 빠른 시작을 보여주는 첫 화면</p></div>
             <div class="legend-item"><strong>매치방</strong><p>입장 전 정보와 참가자, 시작 조건을 보여주는 화면</p></div>
-            <div class="legend-item"><strong>운동 중</strong><p>시간, 거리, 페이스, 일시정지 상태를 크게 보여주는 화면</p></div>
+            <div class="legend-item"><strong>러닝 기록 / 매치중</strong><p>지도, 기록 요약, 핵심 버튼을 크게 보여주고 랭킹은 작게 얹는 화면</p></div>
             <div class="legend-item"><strong>워치</strong><p>핵심 조작만 남긴 최소 UI</p></div>
           </div>
         </section>
@@ -471,8 +553,8 @@
           <div class="timeline">
             <div class="step"><strong>1. 홈</strong><p>오늘의 운동 상태와 매치 진입을 확인한다.</p></div>
             <div class="step"><strong>2. 방 입장</strong><p>방 정보, 참가자, 시작 조건을 본다.</p></div>
-            <div class="step"><strong>3. 운동 중</strong><p>시작, 일시정지, 재개, 종료를 수행한다.</p></div>
-            <div class="step"><strong>4. 실시간 랭킹</strong><p>순위 변화와 남은 시간을 확인한다.</p></div>
+            <div class="step"><strong>3. 러닝 기록</strong><p>업로드한 이미지처럼 지도와 기록 요약, 제어 버튼을 배치한다.</p></div>
+            <div class="step"><strong>4. 매치중</strong><p>우측 상단의 작은 랭킹 오버레이로 현재 순위를 확인한다.</p></div>
             <div class="step"><strong>5. 결과</strong><p>최종 시간과 순위를 정리한다.</p></div>
             <div class="step"><strong>6. 워치</strong><p>핵심 조작만 남긴 보조 화면을 사용한다.</p></div>
           </div>
@@ -569,36 +651,38 @@
             <article class="screen">
               <div class="screen-head">
                 <div>
-                  <h3>RUN / 운동 중</h3>
-                  <p>핵심 수치와 일시정지/종료 버튼만 크게 둔다.</p>
+                  <h3>RUN / 러닝 기록</h3>
+                  <p>업로드한 이미지처럼 지도, 기록 요약, 제어 버튼을 같은 톤으로 배치한다.</p>
                 </div>
-                <span class="tag hot">진행 중</span>
+                <span class="tag hot">기록 화면</span>
               </div>
               <div class="phone">
                 <div class="phone-top"><span>09:41</span><div class="notch"></div><span>러닝</span></div>
                 <div class="screen-body">
-                  <div class="hero-card">
-                    <strong>00:18:42</strong>
-                    <p>현재 러닝 시간 · 일시정지 시간 제외</p>
-                    <div style="height:10px"></div>
-                    <div class="progress"><span style="width: 61%"></span></div>
+                  <div class="hero-card map-panel">
+                    <strong>지도 / 경로</strong>
+                    <p>상단에 지도 영역, 하단에 기록 요약을 배치한다.</p>
                   </div>
-                  <div class="stats-row">
-                    <div class="mini"><span>거리</span><strong>3.8km</strong></div>
-                    <div class="mini"><span>페이스</span><strong>5'04"</strong></div>
-                    <div class="mini"><span>순위</span><strong>2위</strong></div>
+                  <div class="hero-card center">
+                    <span>현재 거리</span>
+                    <strong>1.63km</strong>
+                    <p>기록 요약 영역은 숫자를 크게, 보조 정보는 작게 둔다.</p>
                   </div>
-                  <div class="callout">
-                    <strong>일시정지</strong>
-                    <p>정지 중에는 시간 표시가 멈추고, 재개 버튼이 먼저 보여야 한다.</p>
+                  <div class="metric-grid">
+                    <div class="metric"><span>평균 페이스</span><strong>5'04"</strong></div>
+                    <div class="metric"><span>운동 시간</span><strong>00:18:42</strong></div>
+                    <div class="metric"><span>칼로리</span><strong>218</strong></div>
+                    <div class="metric"><span>고도</span><strong>32m</strong></div>
+                    <div class="metric"><span>BPM</span><strong>156</strong></div>
+                    <div class="metric"><span>일시정지</span><strong>00:14</strong></div>
                   </div>
                   <div class="button-bar">
                     <div class="btn ghost">일시정지</div>
                     <div class="btn primary">종료</div>
                   </div>
                   <div class="note">
-                    <strong>운동 데이터</strong>
-                    <p>심박, 칼로리, 거리 등 보조 정보는 하단에 작게 유지한다.</p>
+                    <strong>제외 항목</strong>
+                    <p>이 화면에는 음악 연결하기 버튼을 넣지 않는다.</p>
                   </div>
                 </div>
                 <div class="tabbar">
@@ -610,27 +694,36 @@
             <article class="screen">
               <div class="screen-head">
                 <div>
-                  <h3>LIVE / 실시간 랭킹</h3>
-                  <p>순위 변화와 진행 상태를 빠르게 읽는 화면이다.</p>
+                  <h3>MATCH / 매치중</h3>
+                  <p>러닝 기록 화면과 같은 시각 언어를 유지하고, 랭킹은 우측 상단의 작은 오버레이로 보여준다.</p>
                 </div>
-                <span class="tag gray">실시간</span>
+                <span class="tag gray">진행 중</span>
               </div>
               <div class="phone">
-                <div class="phone-top"><span>09:41</span><div class="notch"></div><span>랭킹</span></div>
+                <div class="phone-top"><span>09:41</span><div class="notch"></div><span>매치</span></div>
+                <div class="phone-overlay"><small>랭킹</small><strong>#3</strong><span>F1 style</span></div>
                 <div class="screen-body">
                   <div class="hero-card">
                     <strong>서울 나이트 런 · 남은 시간 12:18</strong>
-                    <p>참가자 12명 · 실시간 순위 업데이트 중</p>
+                    <p>페이스, BPM, 시간은 상단에 두고, 핵심 거리와 상태를 중앙에 크게 둔다.</p>
                   </div>
-                  <div class="stack">
-                    <div class="row"><div><strong>1위 민지</strong><small>5.2km · +00:14 상승</small></div><span class="rank hot">1</span></div>
-                    <div class="row"><div><strong>2위 나</strong><small>5.0km · 추월 가능권</small></div><span class="rank white">2</span></div>
-                    <div class="row"><div><strong>3위 준호</strong><small>4.7km · +00:09 하락</small></div><span class="rank">3</span></div>
-                    <div class="row"><div><strong>4위 소연</strong><small>4.4km · 유지</small></div><span class="rank">4</span></div>
+                  <div class="stats-row">
+                    <div class="mini"><span>페이스</span><strong>5'04"</strong></div>
+                    <div class="mini"><span>BPM</span><strong>156</strong></div>
+                    <div class="mini"><span>시간</span><strong>00:18:42</strong></div>
                   </div>
-                  <div class="callout">
-                    <strong>화면 포인트</strong>
-                    <p>내 순위는 색으로 강조하고, 변화량은 짧은 문장으로 설명한다.</p>
+                  <div class="hero-card center">
+                    <span>현재 거리</span>
+                    <strong>1.63km</strong>
+                    <p>랭킹은 큰 목록이 아니라 우측 상단 오버레이로만 노출한다.</p>
+                  </div>
+                  <div class="button-bar">
+                    <div class="btn ghost">일시정지</div>
+                    <div class="btn primary">종료</div>
+                  </div>
+                  <div class="note">
+                    <strong>음악 연결하기 버튼</strong>
+                    <p>매치중 화면에서도 제외한다.</p>
                   </div>
                 </div>
                 <div class="tabbar">
@@ -724,7 +817,7 @@
           <div class="grid-2">
             <div class="callout">
               <strong>구조 체크</strong>
-              <p>홈, 방, 운동, 랭킹, 결과, 워치가 각각 다른 목적을 가지므로 같은 틀을 억지로 쓰지 않도록 했다.</p>
+              <p>홈, 방, 러닝 기록, 매치중, 결과, 워치가 각각 다른 목적을 가지므로 같은 틀을 억지로 쓰지 않도록 했다.</p>
             </div>
             <div class="callout">
               <strong>디자인 체크</strong>
