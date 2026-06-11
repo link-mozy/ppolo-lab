@@ -381,12 +381,13 @@
 
 ## 5. 권장 다음 문서
 
-이 문서 다음으로 만들면 좋은 문서:
-- `docs/ppolo-competition-state-machine.md`
-- `docs/ppolo-ranking-formulas.md`
-- `docs/ppolo-mobile-ui-principles.md`
-- `docs/ppolo-data-retention-policy.md`
-- `docs/ppolo-watch-screen-scenarios.md`
+아래 문서들이 현재 요구사항 정리의 다음 축이다.
+
+- `docs/ppolo-competition-state-machine.md` — 방/참가자 상태 전이와 마감 규칙
+- `docs/ppolo-ranking-formulas.md` — ETA 및 실시간 랭킹 계산식
+- `docs/ppolo-mobile-ui-principles.md` — 홈/경쟁/기록 화면 정보 밀도와 UI 원칙
+- `docs/ppolo-data-retention-policy.md` — 보관/삭제/익명화 정책
+- `docs/ppolo-watch-screen-scenarios.md` — 워치 화면 시나리오 상세화
 
 ---
 
@@ -402,4 +403,4 @@
 - 기록은 수동/자동을 함께 지원하되 자동이 우선
 - 개인정보는 최소 공개
 
-다만, **경쟁 시작 흐름**, **실시간 랭킹 세부 계산**, **워치 화면 시나리오** 는 추가 구체화가 필요하다.
+다만, **실시간 랭킹 세부 계산** 과 **워치 화면 시나리오** 는 추가 구체화가 필요하다.
