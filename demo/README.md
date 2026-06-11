@@ -7,6 +7,10 @@
 - 외부 공개: Cloudflare Tunnel
 - 소스 위치: `demo/`
 - 화면 구현: HTML + CSS + JS
+- 주요 프로토타입:
+  - `https://demo.ppolo.org/design.html`
+  - `https://demo.ppolo.org/wireframe.html`
+  - `https://demo.ppolo.org/home-prototype-2.html`
 
 ## 실행
 ```bash

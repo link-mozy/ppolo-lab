@@ -1,0 +1,708 @@
+<!doctype html>
+<html lang="ko">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>PPOLO 화면 설계서 초안</title>
+    <meta
+      name="description"
+      content="PPOLO 주요 화면과 플로우를 와이어프레임 형태로 정리한 정적 설계서 초안"
+    />
+    <style>
+      :root {
+        color-scheme: dark;
+        --bg: #08111f;
+        --panel: rgba(11, 19, 35, 0.92);
+        --panel-strong: #0d1830;
+        --line: rgba(148, 163, 184, 0.16);
+        --text: #eef5ff;
+        --muted: #97a8c6;
+        --accent: #7c9cff;
+        --accent-2: #33d5bf;
+        --danger: #ff7b7b;
+        --warning: #fbbf24;
+        --shadow: 0 24px 60px rgba(0, 0, 0, 0.34);
+        --radius-xl: 28px;
+        --radius-lg: 22px;
+        --radius-md: 16px;
+      }
+
+      * { box-sizing: border-box; }
+      html, body { margin: 0; min-height: 100%; }
+      body {
+        color: var(--text);
+        font-family: Inter, Pretendard, "Noto Sans KR", system-ui, -apple-system, sans-serif;
+        background:
+          radial-gradient(circle at top left, rgba(124, 156, 255, 0.14), transparent 25%),
+          radial-gradient(circle at top right, rgba(51, 213, 191, 0.1), transparent 22%),
+          linear-gradient(180deg, #050a13 0%, var(--bg) 100%);
+      }
+
+      a { color: inherit; }
+      .page {
+        max-width: 1460px;
+        margin: 0 auto;
+        padding: 28px 20px 40px;
+      }
+      .topbar,
+      .panel,
+      .screen,
+      .note,
+      .chip,
+      .legend-item,
+      .wire {
+        background: var(--panel);
+        border: 1px solid var(--line);
+        box-shadow: var(--shadow);
+        backdrop-filter: blur(12px);
+      }
+
+      .topbar {
+        display: flex;
+        justify-content: space-between;
+        gap: 18px;
+        align-items: flex-start;
+        padding: 24px 26px;
+        border-radius: var(--radius-xl);
+      }
+
+      .eyebrow {
+        margin: 0 0 8px;
+        font-size: 12px;
+        letter-spacing: 0.14em;
+        text-transform: uppercase;
+        color: var(--accent-2);
+      }
+
+      h1, h2, h3, h4, p { margin-top: 0; }
+      h1 { margin-bottom: 10px; font-size: clamp(2rem, 4vw, 3.2rem); }
+      .lead { margin: 0; color: var(--muted); line-height: 1.75; max-width: 72ch; }
+      .chip-row { display: flex; flex-wrap: wrap; gap: 10px; align-content: flex-start; }
+      .chip {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        padding: 10px 14px;
+        border-radius: 999px;
+        color: var(--text);
+        font-size: 13px;
+        white-space: nowrap;
+      }
+      .chip.accent { color: var(--accent-2); border-color: rgba(51, 213, 191, 0.24); }
+      .chip.warn { color: #ffe39b; border-color: rgba(251, 191, 36, 0.24); }
+
+      .hero {
+        margin-top: 20px;
+        border-radius: var(--radius-xl);
+        padding: 26px;
+        display: grid;
+        grid-template-columns: 1fr auto;
+        gap: 20px;
+      }
+      .hero h2 {
+        margin-bottom: 10px;
+        font-size: clamp(1.45rem, 2.8vw, 2.25rem);
+      }
+
+      .legend {
+        display: grid;
+        gap: 10px;
+        min-width: 260px;
+      }
+      .legend-item {
+        border-radius: 18px;
+        padding: 14px 16px;
+      }
+      .legend-item strong { display: block; margin-bottom: 6px; }
+      .legend-item p { margin: 0; color: var(--muted); line-height: 1.6; }
+
+      .section { margin-top: 22px; }
+      .section-head {
+        display: flex;
+        justify-content: space-between;
+        gap: 16px;
+        align-items: end;
+        margin-bottom: 16px;
+      }
+      .section-head h2 { margin-bottom: 4px; }
+      .section-note { margin: 0; color: var(--muted); line-height: 1.6; }
+
+      .flow {
+        display: grid;
+        grid-template-columns: repeat(4, minmax(0, 1fr));
+        gap: 14px;
+      }
+      .flow-node {
+        border-radius: 18px;
+        padding: 16px;
+        border: 1px solid var(--line);
+        background: rgba(255, 255, 255, 0.03);
+      }
+      .flow-node strong { display: block; margin-bottom: 6px; }
+      .flow-node p { margin: 0; color: var(--muted); line-height: 1.65; }
+      .arrow {
+        display: none;
+      }
+
+      .screen-grid {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 14px;
+      }
+
+      .screen {
+        border-radius: var(--radius-xl);
+        padding: 18px;
+      }
+      .screen-head {
+        display: flex;
+        justify-content: space-between;
+        gap: 14px;
+        align-items: flex-start;
+        margin-bottom: 14px;
+      }
+      .screen-head h3 { margin-bottom: 8px; font-size: 1.1rem; }
+      .screen-head p { margin: 0; color: var(--muted); line-height: 1.6; }
+      .device {
+        width: 100%;
+        min-height: 520px;
+        border-radius: 26px;
+        padding: 14px;
+        border: 1px solid rgba(255, 255, 255, 0.06);
+        background:
+          linear-gradient(180deg, rgba(17, 25, 43, 0.96), rgba(9, 15, 26, 0.98));
+      }
+      .phone-bar {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        gap: 10px;
+        padding: 10px 12px;
+        border-radius: 16px;
+        margin-bottom: 12px;
+        background: rgba(255, 255, 255, 0.04);
+        border: 1px solid rgba(255, 255, 255, 0.06);
+        color: var(--muted);
+        font-size: 12px;
+      }
+      .phone-pip { width: 10px; height: 10px; border-radius: 50%; background: linear-gradient(135deg, var(--accent), var(--accent-2)); }
+      .wire {
+        border-radius: 18px;
+        padding: 14px;
+        margin-bottom: 12px;
+      }
+      .wire-title {
+        display: flex;
+        justify-content: space-between;
+        gap: 12px;
+        align-items: center;
+        margin-bottom: 12px;
+      }
+      .wire-title strong { font-size: 1rem; }
+      .badge {
+        padding: 7px 10px;
+        border-radius: 999px;
+        background: rgba(124, 156, 255, 0.12);
+        color: #d8e2ff;
+        font-size: 12px;
+        font-weight: 700;
+        white-space: nowrap;
+      }
+      .badge.hot { background: rgba(51, 213, 191, 0.12); color: #c7faf1; }
+      .badge.warn { background: rgba(251, 191, 36, 0.12); color: #ffecb2; }
+      .badge.danger { background: rgba(255, 123, 123, 0.12); color: #ffd0d0; }
+      .block-row { display: grid; gap: 10px; }
+      .block {
+        border-radius: 14px;
+        padding: 12px 14px;
+        background: rgba(255, 255, 255, 0.03);
+        border: 1px dashed rgba(148, 163, 184, 0.22);
+        color: var(--muted);
+        line-height: 1.6;
+      }
+      .block strong { color: var(--text); }
+      .block.primary {
+        background: linear-gradient(135deg, rgba(124, 156, 255, 0.18), rgba(51, 213, 191, 0.08));
+        border-style: solid;
+      }
+      .block.action {
+        text-align: center;
+        color: #eaf5ff;
+        font-weight: 700;
+      }
+      .stack {
+        display: grid;
+        gap: 10px;
+      }
+      .stack .row {
+        display: flex;
+        justify-content: space-between;
+        gap: 12px;
+        align-items: center;
+        padding: 12px 14px;
+        border-radius: 14px;
+        background: rgba(255, 255, 255, 0.03);
+        border: 1px solid rgba(255, 255, 255, 0.06);
+      }
+      .stack .row small { color: var(--muted); display: block; margin-top: 4px; }
+
+      .note {
+        border-radius: var(--radius-lg);
+        padding: 16px 18px;
+      }
+      .note strong { display: block; margin-bottom: 6px; }
+      .note p { margin: 0; color: var(--muted); line-height: 1.65; }
+
+      .tablelike {
+        display: grid;
+        gap: 12px;
+      }
+      .table-row {
+        border-radius: 18px;
+        border: 1px solid var(--line);
+        background: rgba(255, 255, 255, 0.03);
+        padding: 14px 16px;
+      }
+      .table-row strong { display: block; margin-bottom: 6px; }
+      .table-row p { margin: 0; color: var(--muted); line-height: 1.6; }
+
+      .footer {
+        margin-top: 20px;
+        color: var(--muted);
+        font-size: 13px;
+        display: flex;
+        justify-content: space-between;
+        gap: 16px;
+        align-items: center;
+      }
+      .footer a { color: var(--accent-2); text-decoration: none; font-weight: 700; }
+
+      @media (max-width: 1180px) {
+        .topbar,
+        .hero,
+        .screen-grid,
+        .flow { grid-template-columns: 1fr; display: grid; }
+        .topbar { display: grid; }
+        .section-head { display: grid; }
+        .footer { display: grid; }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="page">
+      <header class="topbar">
+        <div>
+          <p class="eyebrow">PPOLO / WIREFRAME DOCUMENT</p>
+          <h1>화면 설계서 초안</h1>
+          <p class="lead">
+            이 페이지는 주요 화면의 구조, 정보 우선순위, 버튼 위치, 이동 흐름을 와이어프레임 형태로 확인하기 위한 초안입니다.
+            디자인보다 먼저 구조가 타당한지 보는 용도입니다.
+          </p>
+        </div>
+        <div class="chip-row">
+          <span class="chip accent">공개 경로: wireframe.html</span>
+          <span class="chip">주요 화면 18개</span>
+          <span class="chip warn">확인 포인트: 구조 · 플로우 · 누락</span>
+        </div>
+      </header>
+
+      <section class="hero">
+        <div>
+          <p class="eyebrow">설계 기준</p>
+          <h2>접속 → 로그인 → 홈 → 기록/경쟁 → 결과 확인 흐름으로 읽히게 한다.</h2>
+          <p class="lead">
+            화면마다 사용자의 목적이 다르므로, 같은 레이아웃을 억지로 반복하지 않고 목적에 맞는 정보 덩어리를 배치합니다.
+            특히 경쟁 화면은 대기실과 측정 중 화면을 분리하는 것이 핵심입니다.
+          </p>
+        </div>
+        <div class="legend">
+          <div class="legend-item"><strong>상태 표현</strong><p>대기 / 진행 / 경고 / 종료는 색보다 문구가 먼저 읽히게 둡니다.</p></div>
+          <div class="legend-item"><strong>버튼 수</strong><p>워치와 런닝 화면은 조작 버튼이 많지 않도록 최소화합니다.</p></div>
+          <div class="legend-item"><strong>정보 우선순위</strong><p>홈은 현재 상태, 경쟁은 랭킹/마감, 기록은 입력/저장 순서로 배치합니다.</p></div>
+        </div>
+      </section>
+
+      <section class="section">
+        <div class="section-head">
+          <div>
+            <p class="eyebrow">1. 전체 플로우</p>
+            <h2>주요 이동 경로</h2>
+          </div>
+          <p class="section-note">화살표를 따라가며 실제 화면 전환이 자연스러운지 확인합니다.</p>
+        </div>
+        <div class="flow">
+          <div class="flow-node"><strong>1. 접속 로딩</strong><p>서버/버전 확인 → 로그인 정보 확인 → 홈 또는 로그인으로 분기</p></div>
+          <div class="flow-node"><strong>2. 최초 로그인</strong><p>소셜 로그인 성공 시 홈 이동, 실패 시 로그인 유지</p></div>
+          <div class="flow-node"><strong>3. 홈</strong><p>현재 활동 상태와 대시보드 요약 확인</p></div>
+          <div class="flow-node"><strong>4. 기록 / 경쟁</strong><p>운동 기록, 경쟁방 목록, 생성, 입장, 측정, 결과 확인</p></div>
+        </div>
+      </section>
+
+      <section class="section">
+        <div class="section-head">
+          <div>
+            <p class="eyebrow">2. 주요 화면 와이어프레임</p>
+            <h2>각 화면의 구조 초안</h2>
+          </div>
+          <p class="section-note">실제 픽셀보다 레이아웃 덩어리와 버튼 위치를 우선 봅니다.</p>
+        </div>
+
+        <div class="screen-grid">
+          <article class="screen">
+            <div class="screen-head">
+              <div>
+                <h3>1) 접속 로딩 페이지</h3>
+                <p>업데이트 확인 / 서버 상태 / 사용자 정보 확인 / 로그인 분기</p>
+              </div>
+              <span class="badge">로딩</span>
+            </div>
+            <div class="device">
+              <div class="phone-bar"><span class="phone-pip"></span><span>서버 연결 중</span><span>LOADING</span></div>
+              <div class="wire">
+                <div class="wire-title"><strong>상단 상태</strong><span class="badge hot">통신 확인</span></div>
+                <div class="block-row">
+                  <div class="block primary"><strong>버전 체크</strong><br />앱이 최신인지 확인하고, 필요 시 업데이트 안내를 노출</div>
+                  <div class="block"><strong>서버 상태</strong><br />데이터를 받아올 수 있는지, 인증 서버가 응답하는지 확인</div>
+                  <div class="block"><strong>사용자 정보</strong><br />소셜 로그인 정보가 있으면 홈으로, 없으면 로그인으로 분기</div>
+                </div>
+              </div>
+              <div class="block action">기다리기 / 앱 종료</div>
+            </div>
+          </article>
+
+          <article class="screen">
+            <div class="screen-head">
+              <div>
+                <h3>2) 최초 로그인 페이지</h3>
+                <p>소셜 로그인 버튼 / 실패 메시지 / 성공 후 홈 이동</p>
+              </div>
+              <span class="badge hot">AUTH</span>
+            </div>
+            <div class="device">
+              <div class="phone-bar"><span class="phone-pip"></span><span>로그인 필요</span><span>LOGIN</span></div>
+              <div class="wire">
+                <div class="wire-title"><strong>중앙 안내</strong><span class="badge">설명</span></div>
+                <div class="block-row">
+                  <div class="block primary"><strong>서비스 소개</strong><br />PPOLO 계정을 만들고 사용자 식별 정보를 저장하는 영역</div>
+                  <div class="block"><strong>소셜 로그인 버튼</strong><br />Naver 로그인 버튼을 가장 눈에 띄는 위치에 배치</div>
+                  <div class="block"><strong>실패 메시지</strong><br />오류가 발생하면 같은 화면에 머물며 재시도 가능</div>
+                </div>
+              </div>
+              <div class="block action">로그인 버튼</div>
+            </div>
+          </article>
+
+          <article class="screen">
+            <div class="screen-head">
+              <div>
+                <h3>3) 홈 화면</h3>
+                <p>대시보드 / 공지 / 이벤트 / 하단 네비게이션</p>
+              </div>
+              <span class="badge hot">HOME</span>
+            </div>
+            <div class="device">
+              <div class="phone-bar"><span class="phone-pip"></span><span>오늘의 상태</span><span>HOME</span></div>
+              <div class="wire">
+                <div class="wire-title"><strong>상단 요약</strong><span class="badge hot">대시보드</span></div>
+                <div class="block-row">
+                  <div class="block primary"><strong>현재 참여 상태</strong><br />참여 중인 방이 있으면 카드 1개만 표시</div>
+                  <div class="block"><strong>이번 주 경쟁 성과</strong><br />경쟁 횟수 / 평균 랭킹 / 최고 랭킹</div>
+                  <div class="block"><strong>이번 주 운동 기록</strong><br />운동 횟수 / 주로 한 부위 / 최근 기록</div>
+                </div>
+              </div>
+              <div class="wire">
+                <div class="wire-title"><strong>하단</strong><span class="badge">네비게이션</span></div>
+                <div class="stack">
+                  <div class="row"><div>홈</div><span class="badge">선택됨</span></div>
+                  <div class="row"><div>운동 기록</div><span class="badge">이동</span></div>
+                  <div class="row"><div>경쟁</div><span class="badge">이동</span></div>
+                </div>
+              </div>
+            </div>
+          </article>
+
+          <article class="screen">
+            <div class="screen-head">
+              <div>
+                <h3>4) 운동 기록 확인 화면</h3>
+                <p>헬스 / 런닝 탭 분리, 기록 목록, 운동 버튼</p>
+              </div>
+              <span class="badge">LOG</span>
+            </div>
+            <div class="device">
+              <div class="phone-bar"><span class="phone-pip"></span><span>운동 기록</span><span>LIST</span></div>
+              <div class="wire">
+                <div class="wire-title"><strong>카테고리 탭</strong><span class="badge">헬스 / 런닝</span></div>
+                <div class="stack">
+                  <div class="row"><div>헬스 기록 목록</div><span class="badge hot">기록</span></div>
+                  <div class="row"><div>런닝 기록 목록</div><span class="badge hot">기록</span></div>
+                </div>
+              </div>
+              <div class="block action">운동 시작 버튼</div>
+            </div>
+          </article>
+
+          <article class="screen">
+            <div class="screen-head">
+              <div>
+                <h3>5) 운동 기록 디테일</h3>
+                <p>삭제 / 수정 / 자동값 / 수동값 분리</p>
+              </div>
+              <span class="badge warn">DETAIL</span>
+            </div>
+            <div class="device">
+              <div class="phone-bar"><span class="phone-pip"></span><span>기록 상세</span><span>VIEW</span></div>
+              <div class="wire">
+                <div class="wire-title"><strong>상단</strong><span class="badge warn">삭제 / 수정</span></div>
+                <div class="block-row">
+                  <div class="block primary"><strong>기본 정보</strong><br />날짜, 유형, 상태, 저장 경로 표시</div>
+                  <div class="block"><strong>헬스 상세</strong><br />세트 / 무게 / 종목 / 부위 / 워치 정보</div>
+                  <div class="block"><strong>런닝 상세</strong><br />GPS / 거리 / 시간 / 페이스 / 심박수 / 케이던스</div>
+                </div>
+              </div>
+              <div class="block action">수정 · 제거</div>
+            </div>
+          </article>
+
+          <article class="screen">
+            <div class="screen-head">
+              <div>
+                <h3>6) 헬스 입력 화면</h3>
+                <p>워치 시작 / 휴식 / 재운동 / 종료, 모바일 누적 입력</p>
+              </div>
+              <span class="badge hot">HEALTH</span>
+            </div>
+            <div class="device">
+              <div class="phone-bar"><span class="phone-pip"></span><span>헬스 기록</span><span>INPUT</span></div>
+              <div class="wire">
+                <div class="wire-title"><strong>워치 상태</strong><span class="badge hot">리모컨</span></div>
+                <div class="stack">
+                  <div class="row"><div>운동 시작</div><span class="badge">시작 전</span></div>
+                  <div class="row"><div>휴식 / 재운동 / 종료</div><span class="badge">진행 중</span></div>
+                </div>
+              </div>
+              <div class="wire">
+                <div class="wire-title"><strong>모바일 입력</strong><span class="badge">누적</span></div>
+                <div class="block-row">
+                  <div class="block primary"><strong>작성일</strong><br />기본값은 오늘 날짜</div>
+                  <div class="block"><strong>운동 추가</strong><br />부위 / 운동명 / 세트 / 무게를 드롭다운 중심으로 입력</div>
+                  <div class="block"><strong>삭제 / 저장</strong><br />항목 삭제 가능, 최종 저장으로 기록 목록에 반영</div>
+                </div>
+              </div>
+            </div>
+          </article>
+
+          <article class="screen">
+            <div class="screen-head">
+              <div>
+                <h3>7) 런닝 수동 입력</h3>
+                <p>날짜 / 시작 시간 / 종료 시간 / 메모</p>
+              </div>
+              <span class="badge">MANUAL</span>
+            </div>
+            <div class="device">
+              <div class="phone-bar"><span class="phone-pip"></span><span>런닝 수동 입력</span><span>FORM</span></div>
+              <div class="wire">
+                <div class="wire-title"><strong>폼 구조</strong><span class="badge">간단</span></div>
+                <div class="block-row">
+                  <div class="block primary"><strong>날짜</strong><br />기록일을 먼저 정한다</div>
+                  <div class="block"><strong>시작 시간 / 종료 시간</strong><br />운동 시간 구간을 입력한다</div>
+                  <div class="block"><strong>메모</strong><br />추가 설명을 남긴다</div>
+                </div>
+              </div>
+              <div class="block action">저장</div>
+            </div>
+          </article>
+
+          <article class="screen">
+            <div class="screen-head">
+              <div>
+                <h3>8) 런닝 진행 화면</h3>
+                <p>시작 → 카운트다운 → 중지 / 일시정지 / 재개</p>
+              </div>
+              <span class="badge hot">RUN</span>
+            </div>
+            <div class="device">
+              <div class="phone-bar"><span class="phone-pip"></span><span>런닝 중</span><span>LIVE</span></div>
+              <div class="wire">
+                <div class="wire-title"><strong>시작 전</strong><span class="badge warn">3 · 2 · 1</span></div>
+                <div class="block primary">시작 버튼을 누르면 카운트다운 후 진행 화면으로 전환</div>
+              </div>
+              <div class="wire">
+                <div class="wire-title"><strong>진행 중</strong><span class="badge hot">거리 / 페이스</span></div>
+                <div class="block-row">
+                  <div class="block"><strong>런닝 시각</strong><br />현재 누적 시간 표시</div>
+                  <div class="block"><strong>거리</strong><br />현재 이동 거리 표시</div>
+                  <div class="block"><strong>페이스</strong><br />현재 속도와 평균값 표시</div>
+                </div>
+              </div>
+              <div class="stack">
+                <div class="row"><div>일시정지 / 재개</div><span class="badge">상태 전환</span></div>
+                <div class="row"><div>중지</div><span class="badge danger">저장 후 상세로 이동</span></div>
+              </div>
+            </div>
+          </article>
+
+          <article class="screen">
+            <div class="screen-head">
+              <div>
+                <h3>9) 경쟁 방 목록 / 생성</h3>
+                <p>검색, 비밀번호 확인, 생성, 입장</p>
+              </div>
+              <span class="badge hot">ROOM</span>
+            </div>
+            <div class="device">
+              <div class="phone-bar"><span class="phone-pip"></span><span>경쟁방 목록</span><span>SEARCH</span></div>
+              <div class="wire">
+                <div class="wire-title"><strong>목록 카드</strong><span class="badge">제목 · 거리 · 마감 · 인원 · 비밀번호</span></div>
+                <div class="block-row">
+                  <div class="block primary"><strong>검색 / 필터</strong><br />런닝방만 노출, 현재 대기중인 방 목록 확인</div>
+                  <div class="block"><strong>방 입장</strong><br />비밀번호가 있으면 팝업으로 확인 후 입장</div>
+                  <div class="block"><strong>새로운 경쟁</strong><br />생성 버튼으로 방 생성 화면으로 이동</div>
+                </div>
+              </div>
+            </div>
+          </article>
+
+          <article class="screen">
+            <div class="screen-head">
+              <div>
+                <h3>10) 경쟁 방 생성</h3>
+                <p>제목 / 목표거리 / 인원 / 마감 / 일시정지 / 합의 / 비밀번호</p>
+              </div>
+              <span class="badge">CREATE</span>
+            </div>
+            <div class="device">
+              <div class="phone-bar"><span class="phone-pip"></span><span>방 생성</span><span>FORM</span></div>
+              <div class="wire">
+                <div class="wire-title"><strong>입력 영역</strong><span class="badge">필수값</span></div>
+                <div class="block-row">
+                  <div class="block primary"><strong>방 제목 / 목표 거리 / 최대 인원</strong><br />핵심 방 정보</div>
+                  <div class="block"><strong>마감 시간 / 일시정지 유효 시간</strong><br />시간 규칙과 pause 규칙</div>
+                  <div class="block"><strong>합의 결정 / 비밀번호</strong><br />옵션과 보안 방식</div>
+                </div>
+              </div>
+              <div class="block action">생성 · 취소</div>
+            </div>
+          </article>
+
+          <article class="screen">
+            <div class="screen-head">
+              <div>
+                <h3>11) 경쟁 방 대기실</h3>
+                <p>방장 시작 / 참가자 초대 / 나가기 / 참가자 현황</p>
+              </div>
+              <span class="badge hot">WAIT</span>
+            </div>
+            <div class="device">
+              <div class="phone-bar"><span class="phone-pip"></span><span>대기실</span><span>LOBBY</span></div>
+              <div class="wire">
+                <div class="wire-title"><strong>방 정보</strong><span class="badge">목표거리 / 마감 / 인원</span></div>
+                <div class="block-row">
+                  <div class="block primary"><strong>방 상태</strong><br />경쟁 준비 상태, 참가자 입장 완료를 기다리는 구역</div>
+                  <div class="block"><strong>방장 버튼</strong><br />시작 버튼은 방장만 보이며 2명 이상 조건 확인</div>
+                  <div class="block"><strong>참가자 버튼</strong><br />초대 / 나가기만 보이고, 방장은 나가면 방 종료</div>
+                </div>
+              </div>
+            </div>
+          </article>
+
+          <article class="screen">
+            <div class="screen-head">
+              <div>
+                <h3>12) 경쟁 기록측정</h3>
+                <p>측정 버튼 → 진행 → 일시정지 / 중지 → 결과 대기</p>
+              </div>
+              <span class="badge hot">MEASURE</span>
+            </div>
+            <div class="device">
+              <div class="phone-bar"><span class="phone-pip"></span><span>경쟁 측정</span><span>LIVE</span></div>
+              <div class="wire">
+                <div class="wire-title"><strong>시작 전</strong><span class="badge">측정</span></div>
+                <div class="block primary">처음에는 측정 버튼만 보이고, 누르면 기록 중 화면으로 전환</div>
+              </div>
+              <div class="wire">
+                <div class="wire-title"><strong>측정 중</strong><span class="badge hot">실시간 랭킹</span></div>
+                <div class="block-row">
+                  <div class="block"><strong>거리 / 페이스 / 차이</strong><br />현재 상태와 경쟁 정보를 함께 표시</div>
+                  <div class="block"><strong>일시정지</strong><br />허용 시간이 있으면 노출, 없으면 숨김</div>
+                  <div class="block"><strong>중지</strong><br />포기 또는 종료로 처리하고 결과 대기로 이동</div>
+                </div>
+              </div>
+            </div>
+          </article>
+
+          <article class="screen">
+            <div class="screen-head">
+              <div>
+                <h3>13) 경쟁 랭킹 확인</h3>
+                <p>최종 순위, 순위 외 결과, 합의 동의 여부</p>
+              </div>
+              <span class="badge warn">FINAL</span>
+            </div>
+            <div class="device">
+              <div class="phone-bar"><span class="phone-pip"></span><span>결과</span><span>RANK</span></div>
+              <div class="wire">
+                <div class="wire-title"><strong>메인 리스트</strong><span class="badge">1위 · 2위 · 3위</span></div>
+                <div class="block primary">완주자 숫자 순위 리스트를 가장 먼저 보여준다</div>
+              </div>
+              <div class="wire">
+                <div class="wire-title"><strong>순위 외 결과</strong><span class="badge warn">DNS / DNF / 실격</span></div>
+                <div class="block">접힘 섹션으로 분리해서 표시한다</div>
+              </div>
+              <div class="block action">동의 버튼(옵션)</div>
+            </div>
+          </article>
+
+          <article class="screen">
+            <div class="screen-head">
+              <div>
+                <h3>14) 채팅 / 공지</h3>
+                <p>목록 → 상세, 공지 목록 → 본문</p>
+              </div>
+              <span class="badge">COMM</span>
+            </div>
+            <div class="device">
+              <div class="phone-bar"><span class="phone-pip"></span><span>소셜 정보</span><span>LIST</span></div>
+              <div class="wire">
+                <div class="wire-title"><strong>목록 화면</strong><span class="badge">채팅 / 공지</span></div>
+                <div class="block-row">
+                  <div class="block primary"><strong>채팅 방 목록</strong><br />채팅방 입장 / 생성</div>
+                  <div class="block"><strong>채팅 화면</strong><br />대화 입력과 메시지 흐름</div>
+                  <div class="block"><strong>공지 목록 / 본문</strong><br />공지 확인과 상세 보기</div>
+                </div>
+              </div>
+            </div>
+          </article>
+        </div>
+      </section>
+
+      <section class="section grid-2">
+        <article class="note">
+          <strong>구조 검토 포인트</strong>
+          <p>한 화면에 서로 다른 목적이 섞여 있지 않은지, 그리고 사용자가 어디서 무엇을 해야 하는지가 첫눈에 보이는지 확인합니다.</p>
+        </article>
+        <article class="note">
+          <strong>플로우 검토 포인트</strong>
+          <p>접속과 로그인, 홈 진입, 기록 작성, 경쟁 참여, 결과 확인 사이에 불필요한 되돌아감이 없는지 봅니다.</p>
+        </article>
+      </section>
+
+      <section class="section grid-2">
+        <article class="table-row">
+          <strong>현재 초안에서 더 확정하면 좋은 항목</strong>
+          <p>홈의 공지 비중, 경쟁방 생성 기본값, 로그인 실패 메시지 카피, 워치 상태 문구 압축 여부.</p>
+        </article>
+        <article class="table-row">
+          <strong>이 페이지의 용도</strong>
+          <p>디자인 확정 전 구조 검토용입니다. 픽셀 완성도보다 화면 분리와 플로우가 맞는지 보는 것이 우선입니다.</p>
+        </article>
+      </section>
+
+      <footer class="footer">
+        <div>확인 경로: <a href="/wireframe.html">/wireframe.html</a></div>
+        <div><a href="/design.html">디자인 정의서 보기</a></div>
+      </footer>
+    </div>
+  </body>
+</html>
