@@ -529,14 +529,14 @@
             <h2>진입 → 홈 → 매치방 → 러닝/헬스 기록 → 매치중 → 결과 → 워치</h2>
             <p class="lead">
               화면을 따로 보여주지 않고, 사용자의 실제 이동 순서대로 배치했습니다.
-              러닝 기록과 헬스 기록은 같은 기록 탭 안에 두되,
-              러닝은 거리/페이스 중심, 헬스는 세트/중량/횟수 중심으로 분리합니다.
+              러닝 기록은 거리/페이스 중심, 헬스 기록은 날짜를 먼저 고른 뒤
+              운동 항목을 하나씩 추가하는 입력 흐름으로 분리합니다.
             </p>
           </div>
           <div class="legend">
             <div class="legend-item"><strong>홈</strong><p>오늘의 상태와 빠른 시작을 보여주는 첫 화면</p></div>
             <div class="legend-item"><strong>매치방</strong><p>입장 전 정보와 참가자, 시작 조건을 보여주는 화면</p></div>
-            <div class="legend-item"><strong>러닝 / 헬스 기록</strong><p>운동 종류에 따라 기록 방식은 다르지만, 기록 탭에서 함께 관리하는 화면</p></div>
+            <div class="legend-item"><strong>러닝 / 헬스 기록</strong><p>러닝은 자동 기록, 헬스는 날짜 입력 후 운동 항목을 하나씩 추가하는 입력 화면</p></div>
             <div class="legend-item"><strong>워치</strong><p>핵심 조작만 남긴 최소 UI</p></div>
           </div>
         </section>
@@ -553,7 +553,7 @@
           <div class="timeline">
             <div class="step"><strong>1. 홈</strong><p>오늘의 운동 상태와 매치 진입을 확인한다.</p></div>
             <div class="step"><strong>2. 방 입장</strong><p>방 정보, 참가자, 시작 조건을 본다.</p></div>
-            <div class="step"><strong>3. 러닝 / 헬스 기록</strong><p>러닝은 지도와 페이스 중심, 헬스는 세트·중량·횟수 중심으로 배치한다.</p></div>
+            <div class="step"><strong>3. 러닝 / 헬스 기록</strong><p>러닝은 지도와 페이스 중심, 헬스는 날짜 입력 후 운동 항목을 하나씩 추가한다.</p></div>
             <div class="step"><strong>4. 매치중</strong><p>우측 상단의 작은 랭킹 오버레이로 현재 순위를 확인한다.</p></div>
             <div class="step"><strong>5. 결과</strong><p>최종 시간과 순위를 정리한다.</p></div>
             <div class="step"><strong>6. 워치</strong><p>핵심 조작만 남긴 보조 화면을 사용한다.</p></div>
@@ -694,36 +694,38 @@
             <article class="screen">
               <div class="screen-head">
                 <div>
-                  <h3>GYM / 헬스 기록</h3>
-                  <p>세트, 중량, 횟수, 휴식 시간을 중심으로 기록 탭 안에 별도 화면을 둔다.</p>
+                  <h3>GYM / 헬스 기록 입력</h3>
+                  <p>기록을 시작하면 날짜를 먼저 입력하고, 운동 항목을 하나씩 추가하는 화면이다.</p>
                 </div>
                 <span class="tag hot">기록 화면</span>
               </div>
               <div class="phone">
                 <div class="phone-top"><span>09:41</span><div class="notch"></div><span>헬스</span></div>
                 <div class="screen-body">
-                  <div class="hero-card center">
-                    <span>오늘의 운동</span>
-                    <strong>벤치프레스</strong>
-                    <p>5세트 · 80kg · 6회 기준으로 기록하는 헬스 전용 화면</p>
+                  <div class="hero-card">
+                    <strong>기록 날짜</strong>
+                    <p>2026.06.12 · 운동 기록을 시작할 날짜를 먼저 입력한다.</p>
                   </div>
-                  <div class="grid-3">
-                    <div class="mini"><span>세트</span><strong>3 / 5</strong></div>
-                    <div class="mini"><span>중량</span><strong>80kg</strong></div>
-                    <div class="mini"><span>휴식</span><strong>01:30</strong></div>
+                  <div class="grid-2">
+                    <div class="mini"><span>날짜</span><strong>2026-06-12</strong></div>
+                    <div class="mini"><span>상태</span><strong>기록 중</strong></div>
+                  </div>
+                  <div class="callout">
+                    <strong>운동 목록</strong>
+                    <p>부위, 운동명, 세트, 중량, 횟수를 운동 항목별로 하나씩 추가한다.</p>
                   </div>
                   <div class="stack">
-                    <div class="row"><div><strong>1세트</strong><small>80kg · 6회 · 완료</small></div><span class="rank hot">✓</span></div>
-                    <div class="row"><div><strong>2세트</strong><small>80kg · 6회 · 완료</small></div><span class="rank hot">✓</span></div>
-                    <div class="row"><div><strong>3세트</strong><small>80kg · 진행 중</small></div><span class="rank white">3</span></div>
+                    <div class="row"><div><strong>가슴 / 벤치프레스</strong><small>3세트 · 80kg · 6회</small></div><span class="tag hot">삭제</span></div>
+                    <div class="row"><div><strong>등 / 랫풀다운</strong><small>4세트 · 50kg · 10회</small></div><span class="tag white">삭제</span></div>
+                    <div class="row"><div><strong>하체 / 스쿼트</strong><small>5세트 · 100kg · 5회</small></div><span class="tag white">삭제</span></div>
                   </div>
                   <div class="button-bar">
-                    <div class="btn ghost">세트 추가</div>
-                    <div class="btn primary">운동 종료</div>
+                    <div class="btn ghost">운동 추가</div>
+                    <div class="btn primary">기록 저장</div>
                   </div>
                   <div class="note">
-                    <strong>기록 원칙</strong>
-                    <p>러닝과 헬스는 같은 기록 탭에 두되, 항목 구조만 다르게 보여준다.</p>
+                    <strong>입력 규칙</strong>
+                    <p>날짜를 먼저 정한 뒤 운동을 하나씩 추가하고, 잘못 넣은 항목은 삭제한다.</p>
                   </div>
                 </div>
                 <div class="tabbar">
