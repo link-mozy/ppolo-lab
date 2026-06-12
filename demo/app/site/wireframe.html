@@ -609,7 +609,7 @@
               <div class="screen-head">
                 <div>
                   <h3>ROOM / 매치방 대기실</h3>
-                  <p>방 정보, 참가자, 시작 조건, 입장 상태를 보여준다.</p>
+                  <p>초대하기는 참가자 추가, 시작하기는 방장 전용 시작 동작이다.</p>
                 </div>
                 <span class="tag hot">대기 중</span>
               </div>
@@ -623,7 +623,7 @@
                     <div class="progress white"><span style="width: 46%"></span></div>
                   </div>
                   <div class="grid-2">
-                    <div class="mini"><span>내 상태</span><strong>입장 완료</strong></div>
+                    <div class="mini"><span>내 상태</span><strong>방장</strong></div>
                     <div class="mini"><span>시작까지</span><strong>12분</strong></div>
                   </div>
                   <div class="callout">
@@ -636,12 +636,47 @@
                     <div class="row"><div><strong>나</strong><small>대기 중 · 아직 시작 전</small></div><span class="rank">3</span></div>
                   </div>
                   <div class="button-bar">
-                    <div class="btn ghost">나가기</div>
-                    <div class="btn primary">운동 시작 준비</div>
+                    <div class="btn ghost">초대하기</div>
+                    <div class="btn primary">시작하기</div>
+                  </div>
+                  <div class="note">
+                    <strong>버튼 규칙</strong>
+                    <p>초대하기는 참가자 초대 모달을 연다. 시작하기는 방장에게만 보이며 매칭 시작 상태로 이동한다.</p>
                   </div>
                 </div>
                 <div class="tabbar">
                   <div class="tab">홈</div><div class="tab">기록</div><div class="tab active">매치</div><div class="tab">마이</div>
+                </div>
+              </div>
+            </article>
+
+            <article class="screen">
+              <div class="screen-head">
+                <div>
+                  <h3>RECORD / 저장 방식 선택</h3>
+                  <p>기록 탭에 들어오면 먼저 러닝인지 헬스인지 선택한다.</p>
+                </div>
+                <span class="tag hot">분기 화면</span>
+              </div>
+              <div class="phone">
+                <div class="phone-top"><span>09:41</span><div class="notch"></div><span>기록</span></div>
+                <div class="screen-body">
+                  <div class="hero-card center">
+                    <span>무엇을 저장할까요?</span>
+                    <strong>러닝 / 헬스</strong>
+                    <p>저장 종류를 먼저 고른 뒤 해당 입력 화면으로 이동한다.</p>
+                  </div>
+                  <div class="button-bar">
+                    <div class="btn white">러닝 저장</div>
+                    <div class="btn primary">헬스 저장</div>
+                  </div>
+                  <div class="note">
+                    <strong>분기 규칙</strong>
+                    <p>러닝을 선택하면 러닝 입력 화면으로, 헬스를 선택하면 날짜 입력이 있는 헬스 기록 화면으로 이동한다.</p>
+                  </div>
+                </div>
+                <div class="tabbar">
+                  <div class="tab">홈</div><div class="tab active">기록</div><div class="tab">매치</div><div class="tab">마이</div>
                 </div>
               </div>
             </article>
@@ -693,7 +728,7 @@
               <div class="screen-head">
                 <div>
                   <h3>GYM / 헬스 기록 입력</h3>
-                  <p>기록을 시작하면 날짜를 먼저 입력하고, 운동 항목을 하나씩 추가하는 화면이다.</p>
+                  <p>헬스를 선택하면 날짜부터 입력하고, 운동 항목을 한 줄씩 추가하는 화면이다.</p>
                 </div>
                 <span class="tag hot">기록 화면</span>
               </div>
@@ -702,28 +737,32 @@
                 <div class="screen-body">
                   <div class="hero-card">
                     <strong>기록 날짜</strong>
-                    <p>2026.06.12 · 운동 기록을 시작할 날짜를 먼저 입력한다.</p>
+                    <p>먼저 날짜를 고른 뒤, 그 날짜의 운동 기록을 쌓는다.</p>
                   </div>
                   <div class="grid-2">
                     <div class="mini"><span>날짜</span><strong>2026-06-12</strong></div>
-                    <div class="mini"><span>상태</span><strong>기록 중</strong></div>
+                    <div class="mini"><span>상태</span><strong>작성 중</strong></div>
                   </div>
                   <div class="callout">
-                    <strong>운동 목록</strong>
-                    <p>부위, 운동명, 세트, 중량, 횟수를 운동 항목별로 하나씩 추가한다.</p>
+                    <strong>운동 입력 방식</strong>
+                    <p>부위 → 운동명 → 세트 → 중량 → 횟수 순으로 입력하고 추가 버튼을 누른다.</p>
+                  </div>
+                  <div class="stack">
+                    <div class="row"><div><strong>부위</strong><small>가슴</small></div><span class="tag gray">입력</span></div>
+                    <div class="row"><div><strong>운동명</strong><small>벤치프레스</small></div><span class="tag gray">입력</span></div>
+                    <div class="row"><div><strong>세트 / 중량 / 횟수</strong><small>3세트 · 80kg · 6회</small></div><span class="tag gray">입력</span></div>
+                  </div>
+                  <div class="button-bar">
+                    <div class="btn ghost">운동 추가</div>
+                    <div class="btn primary">저장</div>
                   </div>
                   <div class="stack">
                     <div class="row"><div><strong>가슴 / 벤치프레스</strong><small>3세트 · 80kg · 6회</small></div><span class="tag hot">삭제</span></div>
                     <div class="row"><div><strong>등 / 랫풀다운</strong><small>4세트 · 50kg · 10회</small></div><span class="tag white">삭제</span></div>
-                    <div class="row"><div><strong>하체 / 스쿼트</strong><small>5세트 · 100kg · 5회</small></div><span class="tag white">삭제</span></div>
-                  </div>
-                  <div class="button-bar">
-                    <div class="btn ghost">운동 추가</div>
-                    <div class="btn primary">기록 저장</div>
                   </div>
                   <div class="note">
                     <strong>입력 규칙</strong>
-                    <p>날짜를 먼저 정한 뒤 운동을 하나씩 추가하고, 잘못 넣은 항목은 삭제한다.</p>
+                    <p>날짜를 먼저 정한 뒤 운동을 한 개씩 추가하고, 잘못 넣은 항목은 삭제한다.</p>
                   </div>
                 </div>
                 <div class="tabbar">
@@ -736,7 +775,7 @@
               <div class="screen-head">
                 <div>
                   <h3>MATCH / 매치중</h3>
-                  <p>러닝 기록 화면과 같은 시각 언어를 유지하고, 랭킹은 우측 상단의 작은 오버레이로 보여준다.</p>
+                  <p>러닝 기록 화면과 같은 시각 언어를 유지하고, 지도와 랭킹은 작게 분리해 보여준다.</p>
                 </div>
                 <span class="tag gray">진행 중</span>
               </div>
@@ -744,6 +783,10 @@
                 <div class="phone-top"><span>09:41</span><div class="notch"></div><span>매치</span></div>
                 <div class="phone-overlay"><small>랭킹</small><strong>#3</strong><span>F1 style</span></div>
                 <div class="screen-body">
+                  <div class="hero-card map-panel">
+                    <strong>지도 / 코스</strong>
+                    <p>현재 위치와 코스 진행을 실시간으로 보여준다.</p>
+                  </div>
                   <div class="hero-card">
                     <strong>서울 나이트 런 · 남은 시간 12:18</strong>
                     <p>페이스, BPM, 시간은 상단에 두고, 핵심 거리와 상태를 중앙에 크게 둔다.</p>
@@ -777,7 +820,7 @@
               <div class="screen-head">
                 <div>
                   <h3>RESULT / 최종 결과</h3>
-                  <p>종료 후 요약, 순위, 다음 행동을 남긴다.</p>
+                  <p>종료 후 순위, 프로필, 다음 행동을 한 화면에 묶는다.</p>
                 </div>
                 <span class="tag white">종료</span>
               </div>
@@ -788,14 +831,24 @@
                     <strong>완주 완료 · 00:29:18</strong>
                     <p>최종 순위 2위 · 일시정지 01:14 제외</p>
                   </div>
+                  <div class="row">
+                    <div style="display:flex;align-items:center;gap:12px;">
+                      <div style="width:48px;height:48px;border-radius:50%;background:linear-gradient(135deg,#ff3a49,#7a0008);display:grid;place-items:center;font-weight:800;">MK</div>
+                      <div>
+                        <strong>나 · 김민준</strong>
+                        <small>1위 · 00:28:41 · 프로필 노출</small>
+                      </div>
+                    </div>
+                    <span class="tag hot">1위</span>
+                  </div>
                   <div class="grid-3">
                     <div class="mini"><span>총 거리</span><strong>5.6km</strong></div>
                     <div class="mini"><span>평균 페이스</span><strong>5'13"</strong></div>
                     <div class="mini"><span>최대 심박</span><strong>162</strong></div>
                   </div>
                   <div class="stack">
-                    <div class="row"><div><strong>1위 민지</strong><small>00:28:41</small></div><span class="rank hot">1</span></div>
-                    <div class="row"><div><strong>2위 나</strong><small>00:29:18</small></div><span class="rank white">2</span></div>
+                    <div class="row"><div><strong>1위 나 · 김민준</strong><small>프로필 사진 표시</small></div><span class="rank hot">1</span></div>
+                    <div class="row"><div><strong>2위 민지</strong><small>00:29:05</small></div><span class="rank white">2</span></div>
                     <div class="row"><div><strong>3위 준호</strong><small>00:30:02</small></div><span class="rank">3</span></div>
                   </div>
                   <div class="button-bar">
@@ -851,18 +904,22 @@
           <div class="section-head">
             <div>
               <div class="section-index">04 / Notes</div>
-              <h2>이 와이어프레임에서 확인하려는 것</h2>
+              <h2>버튼 동작과 플로우 검토</h2>
             </div>
-            <p>화면 수보다 구조의 적합성이 중요하다.</p>
+            <p>각 버튼이 어디로 가는지 먼저 고정한다.</p>
           </div>
-          <div class="grid-2">
+          <div class="grid-3">
             <div class="callout">
               <strong>구조 체크</strong>
-              <p>홈, 방, 러닝 기록, 매치중, 결과, 워치가 각각 다른 목적을 가지므로 같은 틀을 억지로 쓰지 않도록 했다.</p>
+              <p>홈, 방, 기록 분기, 매치중, 결과, 워치가 각각 다른 목적을 가지므로 같은 틀을 억지로 쓰지 않도록 했다.</p>
             </div>
             <div class="callout">
-              <strong>디자인 체크</strong>
-              <p>와이어프레임이지만 앱처럼 보이기 위해 탭바, 카드, 진행 바, 버튼 위치를 실제 화면처럼 배치했다.</p>
+              <strong>버튼 체크</strong>
+              <p>초대하기는 초대 모달, 시작하기는 방장 전용 시작 상태, 러닝 저장/헬스 저장은 각각의 기록 입력 화면으로 연결한다.</p>
+            </div>
+            <div class="callout">
+              <strong>분기 체크</strong>
+              <p>기록 탭 진입 후에는 먼저 러닝/헬스를 선택하고, 헬스는 날짜 입력 → 운동 한 줄 추가 흐름으로 이어진다.</p>
             </div>
           </div>
         </section>
