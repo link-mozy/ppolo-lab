@@ -333,6 +333,45 @@
       .component-bar.white span { background: linear-gradient(90deg, #fff, #d8d8d8); }
       .component-bar.gray span { background: linear-gradient(90deg, #8d8d8d, #5f5f5f); }
 
+      .asset-grid {
+        display: grid;
+        grid-template-columns: 0.95fr 1.05fr;
+        gap: 14px;
+      }
+      .asset-showcase {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 12px;
+      }
+      .asset-card {
+        padding: 16px;
+        border-radius: 20px;
+        background: rgba(255,255,255,0.03);
+        border: 1px solid rgba(255,255,255,0.08);
+      }
+      .asset-card strong { display: block; margin-bottom: 8px; }
+      .asset-card p { margin: 0 0 12px; color: var(--muted); }
+      .asset-img-wrap {
+        min-height: 130px;
+        display: grid;
+        place-items: center;
+        padding: 14px;
+        border-radius: 16px;
+        background: linear-gradient(180deg, rgba(255,255,255,0.04), rgba(255,255,255,0.02));
+        border: 1px dashed rgba(255,255,255,0.12);
+      }
+      .asset-img {
+        max-width: 100%;
+        max-height: 108px;
+        object-fit: contain;
+      }
+      .asset-badges {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 8px;
+      }
+      .asset-badges .pill { font-size: 12px; padding: 8px 10px; }
+
       .check-grid {
         display: grid;
         grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -581,7 +620,73 @@
         <section class="section">
           <div class="section-head">
             <div>
-              <div class="section-index">05 / State and motion</div>
+              <div class="section-index">05 / Brand assets</div>
+              <h2>로고와 아이콘의 사용 기준</h2>
+            </div>
+            <p>브랜드 자산은 장식이 아니라 식별 장치로 다룬다.</p>
+          </div>
+
+          <div class="asset-grid">
+            <div class="card">
+              <h3>사용 원칙</h3>
+              <ul>
+                <li><strong>로고</strong>는 앱 상단 브랜드 영역, 스플래시, 공유 썸네일처럼 “PPOLO”를 먼저 인식시켜야 하는 곳에 둔다.</li>
+                <li><strong>탭 아이콘</strong>은 홈 / 기록 / 경기 / 마이의 4개 주요 진입점을 구분하는 용도로만 사용한다.</li>
+                <li>아이콘은 배경 위에서 단독 장식처럼 보이지 않게, 텍스트 레이블과 함께 읽히도록 배치한다.</li>
+                <li>활성 상태는 레드 계열, 비활성 상태는 화이트/그레이 계열로 대비를 둔다.</li>
+              </ul>
+              <div style="height:12px"></div>
+              <div class="asset-badges">
+                <span class="pill red">Brand mark</span>
+                <span class="pill white">Bottom nav</span>
+                <span class="pill gray">Active / inactive states</span>
+              </div>
+            </div>
+
+            <div class="asset-showcase">
+              <div class="asset-card">
+                <strong>ppolo-logo.png</strong>
+                <p>앱 로고 / 헤더 / 스플래시에 쓰는 메인 심볼</p>
+                <div class="asset-img-wrap">
+                  <img class="asset-img" src="./assets/ppolo-logo.png" alt="PPOLO 로고" />
+                </div>
+              </div>
+              <div class="asset-card">
+                <strong>tab-home.png</strong>
+                <p>하단 탭바 홈 아이콘</p>
+                <div class="asset-img-wrap">
+                  <img class="asset-img" src="./assets/tab-home.png" alt="홈 탭 아이콘" />
+                </div>
+              </div>
+              <div class="asset-card">
+                <strong>tab-record.png</strong>
+                <p>하단 탭바 기록 아이콘</p>
+                <div class="asset-img-wrap">
+                  <img class="asset-img" src="./assets/tab-record.png" alt="기록 탭 아이콘" />
+                </div>
+              </div>
+              <div class="asset-card">
+                <strong>tab-match.png</strong>
+                <p>하단 탭바 경기 아이콘</p>
+                <div class="asset-img-wrap">
+                  <img class="asset-img" src="./assets/tab-match.png" alt="경기 탭 아이콘" />
+                </div>
+              </div>
+              <div class="asset-card">
+                <strong>tab-my.png</strong>
+                <p>하단 탭바 마이 아이콘</p>
+                <div class="asset-img-wrap">
+                  <img class="asset-img" src="./assets/tab-my.png" alt="마이 탭 아이콘" />
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section class="section">
+          <div class="section-head">
+            <div>
+              <div class="section-index">06 / State and motion</div>
               <h2>상태는 색보다 문구로 먼저 보이게</h2>
             </div>
             <p>움직임은 적게, 변화는 분명하게.</p>
@@ -610,7 +715,7 @@
         <section class="section">
           <div class="section-head">
             <div>
-              <div class="section-index">06 / Review checklist</div>
+              <div class="section-index">07 / Review checklist</div>
               <h2>검토 체크리스트</h2>
             </div>
             <p>이 문서는 멋보다 적용 가능성이 먼저다.</p>
