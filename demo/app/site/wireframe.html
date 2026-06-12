@@ -820,7 +820,7 @@
               <div class="screen-head">
                 <div>
                   <h3>RESULT / 최종 결과</h3>
-                  <p>종료 후 순위, 프로필, 다음 행동을 한 화면에 묶는다.</p>
+                  <p>종료 후 결과 확인과 합의만 남긴다. 합의는 방 설정에 따라 숨길 수 있다.</p>
                 </div>
                 <span class="tag white">종료</span>
               </div>
@@ -829,17 +829,7 @@
                 <div class="screen-body">
                   <div class="hero-card">
                     <strong>완주 완료 · 00:29:18</strong>
-                    <p>최종 순위 2위 · 일시정지 01:14 제외</p>
-                  </div>
-                  <div class="row">
-                    <div style="display:flex;align-items:center;gap:12px;">
-                      <div style="width:48px;height:48px;border-radius:50%;background:linear-gradient(135deg,#ff3a49,#7a0008);display:grid;place-items:center;font-weight:800;">MK</div>
-                      <div>
-                        <strong>나 · 김민준</strong>
-                        <small>1위 · 00:28:41 · 프로필 노출</small>
-                      </div>
-                    </div>
-                    <span class="tag hot">1위</span>
+                    <p>최종 랭킹과 기록 요약을 확인한다.</p>
                   </div>
                   <div class="grid-3">
                     <div class="mini"><span>총 거리</span><strong>5.6km</strong></div>
@@ -847,13 +837,26 @@
                     <div class="mini"><span>최대 심박</span><strong>162</strong></div>
                   </div>
                   <div class="stack">
-                    <div class="row"><div><strong>1위 나 · 김민준</strong><small>프로필 사진 표시</small></div><span class="rank hot">1</span></div>
-                    <div class="row"><div><strong>2위 민지</strong><small>00:29:05</small></div><span class="rank white">2</span></div>
-                    <div class="row"><div><strong>3위 준호</strong><small>00:30:02</small></div><span class="rank">3</span></div>
+                    <div class="row" style="background:linear-gradient(135deg, rgba(229,9,20,0.18), rgba(255,255,255,0.03));border-color:rgba(229,9,20,0.22);">
+                      <div style="display:flex;align-items:center;gap:12px;position:relative;">
+                        <div style="width:58px;height:58px;border-radius:50%;background:radial-gradient(circle at 35% 30%, rgba(255,255,255,0.42), transparent 26%), linear-gradient(135deg, rgba(255,58,73,0.58), rgba(122,0,8,0.9));display:grid;place-items:center;font-weight:900;letter-spacing:0.08em;box-shadow:0 0 0 1px rgba(255,255,255,0.14) inset, 0 0 24px rgba(229,9,20,0.18);">MK</div>
+                        <div>
+                          <strong>김민준</strong>
+                          <small>00:28:41 · 스포트라이트 리더</small>
+                        </div>
+                      </div>
+                      <span class="tag hot">spotlight</span>
+                    </div>
+                    <div class="row"><div><strong>민지</strong><small>00:29:05</small></div><span class="rank white">2</span></div>
+                    <div class="row"><div><strong>준호</strong><small>00:30:02</small></div><span class="rank">3</span></div>
                   </div>
                   <div class="button-bar">
-                    <div class="btn ghost">기록 저장</div>
-                    <div class="btn primary">다음 매치 보기</div>
+                    <div class="btn ghost">확인</div>
+                    <div class="btn primary">합의</div>
+                  </div>
+                  <div class="note">
+                    <strong>합의 버튼 규칙</strong>
+                    <p>합의 기능이 켜진 방에서만 버튼이 노출된다. 꺼져 있으면 결과 확인만 가능하다.</p>
                   </div>
                 </div>
                 <div class="tabbar">
